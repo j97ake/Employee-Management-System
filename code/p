@@ -1,0 +1,5370 @@
+Fimport java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+import java.util.ArrayList;
+public class MainFrame extends JFrame implements ActionListener
+{
+	static Container container;
+	static ArrayList staticArraylist;
+	static String userStatus="";
+	JMenu menu_file,menu_employee,menu_professional,menu_company,menu_search,menu_reports,menu_reportCompany,menu_reportProfessional;
+	JMenuItem mi_exit,mi_employee,mi_professional,mi_company,mi_searchCompany,mi_searchProfessional;
+	JMenuItem mi_reportEmployee,mi_reportProPersonal,mi_reportProQualification,mi_reportProSkill,mi_reportProExperience,mi_reportProProject,mi_reportComDetail,mi_reportComRequirement,mi_reportComSkillRequirement;
+	JMenuBar mb;
+	public void init(String userStatus)
+	{
+		this.userStatus=userStatus;
+		container=getContentPane();
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		//setSize(800,600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+		mb=new JMenuBar();
+
+		menu_file=new JMenu("File");
+		mi_exit=new JMenuItem("Exit");
+		mi_exit.addActionListener(this);
+		menu_file.add(mi_exit);
+
+		menu_employee=new JMenu("Employee_Maintainence");
+		mi_employee=new JMenuItem("Employee");
+		mi_employee.addActionListener(this);
+		menu_employee.add(mi_employee);
+		
+		menu_professional=new JMenu("Professional_Maintainence");
+		mi_professional=new JMenuItem("Professional");
+		mi_professional.addActionListener(this);
+		menu_professional.add(mi_professional);
+
+		menu_company=new JMenu("Company_Maintainence");
+		mi_company=new JMenuItem("Company");
+		mi_company.addActionListener(this);
+		menu_company.add(mi_company);
+
+		menu_search=new JMenu("Search");
+		mi_searchCompany=new JMenuItem("Search Company");
+		mi_searchCompany.addActionListener(this);
+		mi_searchProfessional=new JMenuItem("Search Professional");
+		mi_searchProfessional.addActionListener(this);
+		menu_search.add(mi_searchCompany);
+		menu_search.add(mi_searchProfessional);
+	
+		mi_reportEmployee=new JMenuItem("Employee Report");
+		mi_reportEmployee.addActionListener(this);
+		
+		menu_reportProfessional=new JMenu("Professional's Report");
+
+		mi_reportProPersonal=new JMenuItem("Personal");
+		mi_reportProPersonal.addActionListener(this);
+		mi_reportProQualification=new JMenuItem("Qualification");
+		mi_reportProQualification.addActionListener(this);
+
+		mi_reportProSkill=new JMenuItem("Skill Set");
+		mi_reportProSkill.addActionListener(this);
+
+		mi_reportProExperience=new JMenuItem("Experience");
+		mi_reportProExperience.addActionListener(this);
+
+		mi_reportProProject=new JMenuItem("Projects");
+		mi_reportProProject.addActionListener(this);
+		
+		menu_reportProfessional.add(mi_reportProPersonal);
+		menu_reportProfessional.add(mi_reportProQualification);
+		menu_reportProfessional.add(mi_reportProSkill);
+		menu_reportProfessional.add(mi_reportProExperience);
+		menu_reportProfessional.add(mi_reportProProject);
+
+
+		menu_reportCompany=new JMenu("Company Reports");
+		
+		mi_reportComDetail=new JMenuItem("Company Details");
+		mi_reportComDetail.addActionListener(this);
+
+		mi_reportComRequirement=new JMenuItem("Company Requirement");
+		mi_reportComRequirement.addActionListener(this);
+
+		mi_reportComSkillRequirement=new JMenuItem("Company Skill Set Requirement");
+		mi_reportComSkillRequirement.addActionListener(this);
+
+		menu_reportCompany.add(mi_reportComDetail);
+		menu_reportCompany.add(mi_reportComRequirement);
+		menu_reportCompany.add(mi_reportComSkillRequirement);
+
+		menu_reports=new  JMenu("Reports");
+		menu_reports.add(mi_reportEmployee);
+		menu_reports.add(menu_reportProfessional);
+		menu_reports.add(menu_reportCompany);
+
+		mb.add(menu_file);
+		if(userStatus.equalsIgnoreCase("admin")){
+			mb.add(menu_employee);
+		}
+		mb.add(menu_professional);
+		mb.add(menu_company);
+		if(userStatus.equalsIgnoreCase("admin")||userStatus.equalsIgnoreCase("manager")){
+				mb.add(menu_search);
+				mb.add(menu_reports);
+		}
+
+		setJMenuBar(mb);
+		setTitle("Professional Recruitment Tracking System");
+		setVisible(true);
+		setResizable(false);
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==mi_exit)
+		{
+			System.exit(0);
+		}
+		if(ae.getSource()==mi_employee)
+		{
+	
+	                  Component[] c=container.getComponents();
+        		  for(int i=0;i<c.length;i++)
+		  {
+       			           
+		                  container.remove(c[i]);
+		  }
+			container.add(new ManageEmployeePanel());
+			container.setVisible(false);
+			container.setVisible(true);	
+		
+		}
+		if(ae.getSource()==mi_professional)
+		{
+		  
+		                  Component[] c=container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  container.remove(c[i]);
+			  }
+				container.add(new ManageProPersonal(0,"navigate"));
+				container.setVisible(false);
+				container.setVisible(true);
+		}
+		if(ae.getSource()==mi_company)
+		{
+			container=getContentPane();
+	       		Component[] c=container.getComponents();
+        			for(int i=0;i<c.length;i++)
+		  	{
+       				 
+		                container.remove(c[i]);
+		  	}
+			container.add(new ManageCompanyDetail(0,"navigate"));
+			container.setVisible(false);
+			container.setVisible(true);
+			
+		}	
+	
+		if(ae.getSource()==mi_searchCompany){
+			container=getContentPane();
+			Component[] c=container.getComponents();
+			for(int i=0;i<c.length;i++){
+				container.remove(c[i]);
+			}
+			container.add(new SearchCompany());		
+			container.setVisible(false);
+			container.setVisible(true);
+		}
+
+		if(ae.getSource()==mi_searchProfessional){
+			container=getContentPane();
+			Component[] c=container.getComponents();
+			for(int i=0;i<c.length;i++){
+				container.remove(c[i]);
+			}
+			container.add(new SearchProfessional());		
+			container.setVisible(false);
+			container.setVisible(true);
+		}
+
+		if(ae.getSource()==mi_reportEmployee){
+			new ReportEmployeeDetails();
+		}
+		if(ae.getSource()==mi_reportProPersonal){
+			new ReportProPersonalDetails(); 
+		}
+		if(ae.getSource()==mi_reportProQualification){
+			new ReportProfessionalQualification();
+		}
+		if(ae.getSource()==mi_reportProSkill){
+			new ReportProfessionalSkillSet();
+		}
+		if(ae.getSource()==mi_reportProExperience){
+			new ReportProfessionalExperience();
+		}
+		if(ae.getSource()==mi_reportProProject){
+			new ReportProfessionalProjects();
+		}
+		if(ae.getSource()==mi_reportComDetail){
+			new ReportCompanyDetails();
+		}
+		if(ae.getSource()==mi_reportComRequirement){
+			new ReportCompanyRequirements();
+		}
+		if(ae.getSource()==mi_reportComSkillRequirement){
+			new ReportCompanySkillSetRequirements();
+		}
+		
+	}
+	public static void main(String args[])
+	{
+		MainFrame obj=new MainFrame();
+		obj.init(" ");
+	}
+
+}		import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.sql.Date;
+public class ManageCompanyDetail extends JPanel implements ActionListener
+{
+	JPanel panalCenter,panalSouth,panalEast,panel_heading;
+	JTextField tf_companyId,tf_companyName,tf_address,tf_city,tf_state,tf_country,tf_pin,tf_phone;
+	JTextField tf_email;
+	JButton btn_first,btn_previous,btn_next,btn_last,btn_save,btn_view,btn_cancel,btn_add,btn_edit,btn_delete;
+	JButton btn_nextRecord,btn_previousRecord;  //to navigate between company varius details	
+	JLabel lbl_companyId,lbl_email,lbl_companyName,lbl_address,lbl_city,lbl_state,lbl_country,lbl_pin,lbl_heading,lblMessage,lbl_phone;
+	JLabel lbl_empty1,lbl_empty2,lbl_empty3,lbl_empty4,lbl_empty5,lbl_empty6;
+
+	prtsDb db_obj=new prtsDb();
+	int count=0;
+	String editSaveFlag="none";
+	
+	public ManageCompanyDetail(){}
+	public ManageCompanyDetail(int count,String type)
+	{
+		
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		panalCenter=new JPanel();
+		panalSouth=new JPanel();
+		panalEast=new JPanel();
+		panel_heading=new JPanel();
+
+		
+		tf_companyId=new JTextField(10);
+		tf_companyId.setEditable(false);
+		tf_companyName=new JTextField(10);
+		tf_address=new JTextField(10);		
+		tf_city=new JTextField(10);
+		tf_state=new JTextField(10);
+		tf_country=new JTextField(10);
+		tf_pin=new JTextField(10);
+		tf_phone=new JTextField(10);
+		tf_email=new JTextField(10);
+		
+
+		lbl_companyId=new JLabel("Company Id");
+		lbl_companyName=new JLabel("Company Name");
+		lbl_address=new JLabel("Address");
+		lbl_city=new JLabel("City");
+		lbl_state=new JLabel("State");
+		lbl_country=new JLabel("Country");
+		lbl_pin=new JLabel("Pin");
+		lbl_phone=new JLabel("Phone");
+		lbl_email=new JLabel("Email Id");
+
+		lbl_empty1=new JLabel("");
+		lbl_empty2=new JLabel("");
+
+
+		lbl_heading=new JLabel("Company Detail");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+		
+
+
+		btn_first=new JButton("FIRST");
+		btn_previous=new JButton("PREVIOUS");
+		btn_next=new JButton("NEXT ");
+		btn_last=new JButton("LAST");
+
+		btn_add=new JButton("ADD");
+		btn_edit=new JButton("EDIT");
+		btn_save=new JButton("SAVE & CONTINUE");
+		btn_save.setEnabled(false);
+		btn_delete=new JButton("DELETE");
+		btn_view=new JButton("VIEW ALL");
+		btn_cancel=new JButton("CANCEL");	
+	
+		btn_nextRecord=new JButton("NEXT RECORD");
+		btn_previousRecord=new JButton("PREVIOUS RECORD");
+
+		btn_first.addActionListener(this);
+		btn_previous.addActionListener(this);
+		btn_next.addActionListener(this);
+		btn_last.addActionListener(this);
+		btn_add.addActionListener(this);
+		btn_edit.addActionListener(this);
+		btn_save.addActionListener(this);
+		btn_delete.addActionListener(this);
+		btn_view.addActionListener(this);
+		btn_cancel.addActionListener(this);
+		btn_nextRecord.addActionListener(this);
+		btn_previousRecord.addActionListener(this);
+
+			
+		panalCenter.setLayout(new GridLayout(15,2,5,5));
+		panalSouth.setLayout(new GridLayout(1,4,5,5));
+		panalEast.setLayout(new GridLayout(15,1,5,5));
+		panel_heading.setLayout(new GridLayout(4,1));
+		
+		panel_heading.add(lbl_empty1);
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lbl_empty2);
+		panel_heading.add(lblMessage);
+		
+		
+		panalCenter.add(lbl_companyId);
+		panalCenter.add(tf_companyId);
+		panalCenter.add(lbl_companyName);
+		panalCenter.add(tf_companyName);
+		panalCenter.add(lbl_address);
+		panalCenter.add(tf_address);
+		panalCenter.add(lbl_city);
+		panalCenter.add(tf_city);
+		panalCenter.add(lbl_state);
+		panalCenter.add(tf_state);
+		panalCenter.add(lbl_country);
+		panalCenter.add(tf_country);
+		panalCenter.add(lbl_pin);
+		panalCenter.add(tf_pin);
+		panalCenter.add(lbl_phone);
+		panalCenter.add(tf_phone);
+		panalCenter.add(lbl_email);
+		panalCenter.add(tf_email);
+
+
+		panalSouth.add(btn_first);
+		panalSouth.add(btn_previous);
+		panalSouth.add(btn_next);
+		panalSouth.add(btn_last);
+		
+		panalEast.add(btn_nextRecord);
+		panalEast.add(btn_previousRecord);
+
+		if(MainFrame.userStatus.equalsIgnoreCase("operator")){
+			panalEast.add(btn_add);
+		}
+		panalEast.add(btn_edit);
+		panalEast.add(btn_save);
+		panalEast.add(btn_delete);
+
+		panalEast.add(btn_view);
+		panalEast.add(btn_cancel);
+
+		
+		add(panel_heading,BorderLayout.NORTH);
+		add(panalCenter,BorderLayout.CENTER);
+		add(panalSouth,BorderLayout.SOUTH);
+		add(panalEast,BorderLayout.EAST);
+
+
+		setVisible(true);
+		if(type.equals("navigate")){
+			this.count=count;
+		}
+
+ 		MainFrame.staticArraylist=db_obj.getCompanyRecords();
+		if(MainFrame.staticArraylist.size()>0){
+			CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+			showRecords(company_obj);
+		}  
+		
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+	
+		 if(ae.getSource()==btn_add){
+			clear();
+			tf_companyId.setText("");
+			btn_save.setEnabled(true);
+			editSaveFlag="save";
+
+		}
+
+		if(ae.getSource()==btn_edit){
+			editSaveFlag="edit";
+			lblMessage.setText("");
+			btn_save.setEnabled(true);
+		}
+
+		if(ae.getSource()==btn_save){
+
+		 	int flag=0;
+
+			if(tf_email.getText().equals("")){
+				lblMessage.setText("Enter Email");
+				flag=1;		
+			}
+			try{
+				Long phone=Long.parseLong(tf_phone.getText());
+			}
+			catch(NumberFormatException e){
+				lblMessage.setText("Enter number for Phone Number");
+				flag=1;
+			}
+
+			if(tf_companyName.getText().equals("")){
+				lblMessage.setText("Enter Company name");								
+				flag=1;				
+			}
+			else if(tf_address.getText().equals("")){
+				lblMessage.setText("Enter Address");								
+				flag=1;				
+			}
+			else if(tf_city.getText().equals("")){
+				lblMessage.setText("Enter city");
+				flag=1;		
+			}
+			else if(tf_state.getText().equals("")){
+				lblMessage.setText("Enter State");								
+				flag=1;				
+			}
+			else if(tf_country.getText().equals("")){
+				lblMessage.setText("Enter Country ");								
+				flag=1;				
+			}
+			else if(tf_pin.getText().equals("")){
+				lblMessage.setText("Enter pin");
+				flag=1;		
+			}
+				
+									
+			/* if(editSaveFlag.equals("save") && flag==0){
+					String result=db_obj.saveCompanyInfo(tf_companyName.getText(),tf_address.getText(),tf_city.getText(),tf_state.getText(),tf_country.getText(),tf_pin.getText(),tf_phone.getText(),tf_email.getText());
+					
+					if(result.equals("failed")){
+						lblMessage.setText("Record not saved");					
+					}
+					else if(result.equals("saved")){
+							lblMessage.setText("Record added successfully");
+							MainFrame.staticArraylist=db_obj.getCompanyRecords();
+							count=0;
+							if(MainFrame.staticArraylist.size()>0){
+								CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+								showRecords(company_obj);
+							}
+							
+							btn_save.setEnabled(false);
+					}
+			}*/  
+			 if(editSaveFlag.equals("save") && flag==0){
+				int companyId=db_obj.saveCompanyInfo(tf_companyName.getText(),tf_address.getText(),tf_city.getText(),tf_state.getText(),tf_country.getText(),tf_pin.getText(),tf_phone.getText(),tf_email.getText());
+				if(companyId==0){
+					lblMessage.setText("Record not saved");					
+				}
+				else{
+				                  Component[] c=MainFrame.container.getComponents();
+        					  for(int i=0;i<c.length;i++)
+					  {
+				                	  MainFrame.container.remove(c[i]);
+					  }
+					MainFrame.container.add(new ManageCompanyRequirement(companyId,"save"));
+					MainFrame.container.setVisible(false);
+					MainFrame.container.setVisible(true);
+				}
+			}
+			if(editSaveFlag.equals("edit") && flag==0){
+					String result=db_obj.updateCompanyInfo(Integer.parseInt(tf_companyId.getText()),tf_companyName.getText(),tf_address.getText(),tf_city.getText(),tf_state.getText(),tf_country.getText(),tf_pin.getText(),tf_phone.getText(),tf_email.getText());
+					if(result.equals("updated")){
+					                  Component[] c=MainFrame.container.getComponents();
+        						  for(int i=0;i<c.length;i++)
+						  {
+					                	  MainFrame.container.remove(c[i]);
+						  }
+						MainFrame.container.add(new ManageCompanyRequirement(count,"navigate"));
+						MainFrame.container.setVisible(false);
+						MainFrame.container.setVisible(true);
+						
+					}
+					else{
+						lblMessage.setText("Record not updated");
+						
+					}
+			}
+		  
+		}
+
+		if(ae.getSource()==btn_first){
+			count=0;
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+
+		if(ae.getSource()==btn_previous){
+			if(count==0)
+			{
+			}
+			else
+			{
+				count--;
+			}	
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+		
+		if(ae.getSource()==btn_next){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				if(count==(MainFrame.staticArraylist.size()-1))
+				{}
+				else
+				{
+					count++;
+				}
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}			
+		}
+		
+		if(ae.getSource()==btn_last){
+			count=MainFrame.staticArraylist.size()-1;
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+
+
+		if(ae.getSource()==btn_cancel){	
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+		}
+		if(ae.getSource()==btn_view){
+			ReportCompanyDetails obj=new ReportCompanyDetails();
+		
+		}
+
+		if(ae.getSource()==btn_nextRecord){
+		
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageCompanyRequirement(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+		if(ae.getSource()==btn_previousRecord){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageCompanyRequirementSkillSet(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+		
+		if(ae.getSource()==btn_delete){
+			String result=db_obj.deleteCompany(Integer.parseInt(tf_companyId.getText()));
+			MainFrame.staticArraylist=db_obj.getCompanyRecords();
+			if(result.equals("deleted")){
+				count=0;
+				if(MainFrame.staticArraylist.size()>0)
+				{
+					CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+					showRecords(company_obj);
+				}
+			}
+			else{	
+				lblMessage.setText("Unable to delete");				
+			}			
+			
+		}
+		
+
+  	
+	}
+	
+	public void clear(){
+		//tf_companyId.setText("");
+		tf_companyName.setText("");
+		tf_address.setText("");
+		tf_city.setText("");
+		tf_state.setText("");
+		tf_country.setText("");
+		tf_pin.setText("");
+		tf_phone.setText("");
+		tf_email.setText("");
+	}
+
+	public void showRecords(CompanySkillSetBean company_obj){
+		tf_companyId.setText(String.valueOf(company_obj.getCompanyId()));
+		tf_companyName.setText(company_obj.getCompanyName());
+		tf_address.setText(company_obj.getAddress());
+		tf_city.setText(company_obj.getCity());
+		tf_state.setText(company_obj.getState());
+		tf_country.setText(company_obj.getCountry());
+		tf_pin.setText(company_obj.getPin());
+		tf_phone.setText(company_obj.getPhone());
+		tf_email.setText(company_obj.getEmail());
+
+		lblMessage.setText("");
+		btn_save.setEnabled(false);
+		editSaveFlag="";
+		
+	}
+
+	
+}import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.sql.Date;
+class ManageCompanyRequirement extends JPanel implements ActionListener
+{
+	JPanel panalCenter,panalSouth,panalEast,panel_heading;
+	JTextField tf_companyId,tf_experience,tf_salaryOffered,tf_qualification;
+	
+	JButton btn_first,btn_previous,btn_next,btn_last,btn_save,btn_view,btn_cancel,btn_add,btn_edit,btn_delete;
+	JButton btn_nextRecord,btn_previousRecord;  //to navigate between companys  varius details	
+	JLabel lbl_companyId,lbl_experience,lbl_salaryOffered,lbl_qualification,lblMessage,lbl_heading;
+	JLabel lbl_empty1,lbl_empty2,lbl_empty3,lbl_empty4,lbl_empty5,lbl_empty6,lbl_empty7,lbl_empty8,lbl_empty9,lbl_empty10;
+
+	prtsDb db_obj=new prtsDb();
+	int count=0;
+	String editSaveFlag="none";
+	
+	public ManageCompanyRequirement(){}
+	public ManageCompanyRequirement(int count,String type)
+	{
+			//count has record number when type is navigate
+			//count has companyid when type is save
+
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		panalCenter=new JPanel();
+		panalSouth=new JPanel();
+		panalEast=new JPanel();
+		panel_heading=new JPanel();
+
+		tf_companyId=new JTextField(10);
+		tf_companyId.setEditable(false);
+		tf_experience=new JTextField(10);
+		tf_salaryOffered=new JTextField(10);		
+		tf_qualification=new JTextField(10);
+		
+
+		lbl_companyId=new JLabel("Company Id");
+		lbl_experience=new JLabel("Experience(years)");
+		lbl_salaryOffered=new JLabel("Salary Offered");
+		lbl_qualification=new JLabel("Qualification");
+		
+		lbl_empty1=new JLabel("");
+		lbl_empty2=new JLabel("");
+		lbl_empty3=new JLabel("");
+		lbl_empty4=new JLabel("");
+		lbl_empty5=new JLabel("");
+		lbl_empty6=new JLabel("");
+		lbl_empty7=new JLabel("");
+		lbl_empty8=new JLabel("");
+		lbl_empty9=new JLabel("");
+		lbl_empty10=new JLabel("");
+
+
+		lbl_heading=new JLabel("Company Requirements");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+		
+
+
+		btn_first=new JButton("FIRST");
+		btn_previous=new JButton("PREVIOUS");
+		btn_next=new JButton("NEXT ");
+		btn_last=new JButton("LAST");
+
+		btn_add=new JButton("ADD");
+		btn_edit=new JButton("EDIT");
+		btn_save=new JButton("SAVE & CONTINUE");
+		btn_save.setEnabled(false);
+		btn_delete=new JButton("DELETE");
+		btn_view=new JButton("VIEW ALL");
+		btn_cancel=new JButton("CANCEL");	
+	
+		btn_nextRecord=new JButton("NEXT RECORD");
+		btn_previousRecord=new JButton("PREVIOUS RECORD");
+
+		btn_first.addActionListener(this);
+		btn_previous.addActionListener(this);
+		btn_next.addActionListener(this);
+		btn_last.addActionListener(this);
+		btn_add.addActionListener(this);
+		btn_edit.addActionListener(this);
+		btn_save.addActionListener(this);
+		btn_delete.addActionListener(this);
+		btn_view.addActionListener(this);
+		btn_cancel.addActionListener(this);
+		btn_nextRecord.addActionListener(this);
+		btn_previousRecord.addActionListener(this);
+		
+			
+		
+		panalCenter.setLayout(new GridLayout(15,2,5,5));
+		panalSouth.setLayout(new GridLayout(2,4,5,5));
+		panalEast.setLayout(new GridLayout(15,1,5,5));
+		panel_heading.setLayout(new GridLayout(4,1));
+		
+		panel_heading.add(lbl_empty1);
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lbl_empty2);
+		panel_heading.add(lblMessage);
+		
+		
+		panalCenter.add(lbl_companyId);
+		panalCenter.add(tf_companyId);
+		panalCenter.add(lbl_experience);
+		panalCenter.add(tf_experience);
+		panalCenter.add(lbl_salaryOffered);
+		panalCenter.add(tf_salaryOffered);
+		panalCenter.add(lbl_qualification);
+		panalCenter.add(tf_qualification);
+		panalCenter.add(lbl_empty3);
+		panalCenter.add(lbl_empty4);
+		panalCenter.add(lbl_empty5);
+		panalCenter.add(lbl_empty6);
+		panalCenter.add(lbl_empty7);
+		panalCenter.add(lbl_empty8);
+		panalCenter.add(lbl_empty9);
+		panalCenter.add(lbl_empty10);
+
+
+		if(MainFrame.userStatus.equalsIgnoreCase("operator")){
+			panalSouth.add(btn_add);
+		}
+		else{
+			panalSouth.add(new JLabel(""));
+		}
+		panalSouth.add(btn_edit);
+		panalSouth.add(btn_save);
+		panalSouth.add(btn_delete);
+		panalSouth.add(btn_first);
+		panalSouth.add(btn_previous);
+		panalSouth.add(btn_next);
+		panalSouth.add(btn_last);
+
+		
+		panalEast.add(btn_nextRecord);
+		panalEast.add(btn_previousRecord);
+		panalEast.add(btn_view);
+		panalEast.add(btn_cancel);
+
+		
+		add(panel_heading,BorderLayout.NORTH);
+		add(panalCenter,BorderLayout.CENTER);
+		add(panalSouth,BorderLayout.SOUTH);
+		add(panalEast,BorderLayout.EAST);
+
+		
+		setVisible(true);
+		if(type.equals("navigate")){
+			this.count=count;
+			MainFrame.staticArraylist=db_obj.getCompanyRecords();
+			if(MainFrame.staticArraylist.size()>0){
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+		if(type.equals("save")) {
+			MainFrame.staticArraylist=db_obj.getCompanyRecords();
+			tf_companyId.setText(String.valueOf(count));
+			btn_edit.setEnabled(false);
+			btn_add.setEnabled(false);
+			btn_nextRecord.setVisible(false);
+			btn_previousRecord.setVisible(false);	
+			btn_save.setEnabled(true);
+			editSaveFlag="save";
+		}
+		
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==btn_add){
+			clear();
+			btn_save.setEnabled(true);
+			editSaveFlag="save";
+
+		}
+
+		if(ae.getSource()==btn_edit){
+			editSaveFlag="edit";
+			lblMessage.setText("");
+			btn_save.setEnabled(true);
+		}
+
+		if(ae.getSource()==btn_save){
+
+			int flag=0;
+			int companyId;
+
+			if(tf_qualification.getText().equals("")){
+				lblMessage.setText("Enter qualifications");
+				flag=1;
+			}
+			try{
+				Double salaryOffered=Double.parseDouble(tf_salaryOffered.getText());
+			}
+			catch(NumberFormatException e){
+				lblMessage.setText("Enter number for salary");
+				flag=1;
+			}
+			try{
+				int experience=Integer.parseInt(tf_experience.getText());
+			}
+			catch(NumberFormatException e){
+				lblMessage.setText("Enter number for experience");
+				flag=1;
+			}
+			try{
+				companyId=Integer.parseInt(tf_companyId.getText());
+			}
+			catch(NumberFormatException e){
+				lblMessage.setText("Enter number for companyId");
+				flag=1;
+			}
+						
+			 if(editSaveFlag.equals("save") && flag==0){
+					companyId=Integer.parseInt(tf_companyId.getText());
+					//String result=db_obj.saveCompanyRequirements(Integer.parseInt(tf_experience.getText()),Double.parseDouble(tf_salaryOffered.getText()),tf_qualification.getText());
+					String result=db_obj.updateCompanyRequirements(Integer.parseInt(tf_companyId.getText()),Integer.parseInt(tf_experience.getText()),Double.parseDouble(tf_salaryOffered.getText()),tf_qualification.getText());
+					if(result.equals("failed")){
+						lblMessage.setText("Record not saved");					
+					}
+					else if(result.equals("updated")){
+					                  Component[] c=MainFrame.container.getComponents();
+			        			  for(int i=0;i<c.length;i++)
+						  {
+			       			                MainFrame.container.remove(c[i]);
+						  }
+							MainFrame.container.add(new ManageCompanyRequirementSkillSet(companyId,"save"));
+							MainFrame.container.setVisible(false);
+							MainFrame.container.setVisible(true);
+					}
+			}  
+			if(editSaveFlag.equals("edit") && flag==0){
+					String result=db_obj.updateCompanyRequirements(Integer.parseInt(tf_companyId.getText()),Integer.parseInt(tf_experience.getText()),Double.parseDouble(tf_salaryOffered.getText()),tf_qualification.getText());
+					if(result.equals("updated")){
+					                  Component[] c=MainFrame.container.getComponents();
+			        			  for(int i=0;i<c.length;i++)
+						  {
+			       			                MainFrame.container.remove(c[i]);
+						  }
+							MainFrame.container.add(new ManageCompanyRequirementSkillSet(count,"navigate"));
+							MainFrame.container.setVisible(false);
+							MainFrame.container.setVisible(true);					
+					}
+					else{
+						lblMessage.setText("Record not updated");
+						
+					}
+			}
+		}
+
+		if(ae.getSource()==btn_first){
+			count=0;
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+
+		if(ae.getSource()==btn_previous){
+			if(count==0)
+			{
+			}
+			else
+			{
+				count--;
+			}	
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+		
+		if(ae.getSource()==btn_next){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				if(count==(MainFrame.staticArraylist.size()-1))
+				{}
+				else
+				{
+					count++;
+				}
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}			
+		}
+		
+		if(ae.getSource()==btn_last){
+			count=MainFrame.staticArraylist.size()-1;
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+
+
+		if(ae.getSource()==btn_cancel){	
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+		}
+		if(ae.getSource()==btn_view){
+			ReportCompanyRequirements obj=new ReportCompanyRequirements();
+		
+		}
+		if(ae.getSource()==btn_nextRecord){
+		
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageCompanyRequirementSkillSet(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+		if(ae.getSource()==btn_previousRecord){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageCompanyDetail(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+	
+		if(ae.getSource()==btn_delete){
+			String result=db_obj.deleteCompany(Integer.parseInt(tf_companyId.getText()));
+			MainFrame.staticArraylist=db_obj.getCompanyRecords();
+			if(result.equals("deleted")){
+				count=0;
+				if(MainFrame.staticArraylist.size()>0)
+				{
+					CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+					showRecords(company_obj);
+				}
+			}
+			else{	
+				lblMessage.setText("Unable to delete");				
+			}			
+			
+		}
+	
+
+	}
+	
+	public void clear(){
+		//tf_companyId.setText("");
+		tf_experience.setText("");
+		tf_salaryOffered.setText("");
+		tf_qualification.setText("");
+	}
+	
+	public void showRecords(CompanySkillSetBean company_obj){
+		tf_companyId.setText(String.valueOf(company_obj.getCompanyId()));
+		tf_experience.setText(String.valueOf(company_obj.getExperience()));
+		tf_salaryOffered.setText(String.valueOf(company_obj.getSalaryOffered()));
+		tf_qualification.setText(company_obj.getQualification());
+		
+
+		lblMessage.setText("");
+		btn_add.setEnabled(true);
+		btn_edit.setEnabled(true);
+		btn_nextRecord.setVisible(true);
+		btn_previousRecord.setVisible(true);
+		btn_save.setEnabled(false);
+		editSaveFlag="";
+	}
+	
+	
+}import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.sql.Date;
+public class ManageCompanyRequirementSkillSet extends JPanel implements ActionListener
+{
+	JPanel panalCenter,panalSouth,panalEast,panel_heading;
+	JTextField tf_companyId,tf_os,tf_technologies,tf_scriptLanguages,tf_databases,tf_frameworks,tf_testingTools,tf_otherSkills;
+	JButton btn_first,btn_previous,btn_next,btn_last,btn_save,btn_view,btn_cancel,btn_add,btn_edit,btn_delete;
+	JButton btn_nextRecord,btn_previousRecord;  //to navigate between professionals varius details	
+	JLabel lbl_companyId,lbl_os,lbl_technologies,lbl_scriptLanguages,lbl_databases,lbl_frameworks,lbl_testingTools,lbl_heading,lblMessage,lbl_otherSkills;
+	JLabel lbl_empty1,lbl_empty2,lbl_empty3,lbl_empty4,lbl_empty5,lbl_empty6;
+
+	prtsDb db_obj=new prtsDb();
+	int count=0;
+	String editSaveFlag="none";
+	
+	public ManageCompanyRequirementSkillSet(){}
+	public ManageCompanyRequirementSkillSet(int count,String type)
+	{
+
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		panalCenter=new JPanel();
+		panalSouth=new JPanel();
+		panalEast=new JPanel();
+		panel_heading=new JPanel();
+
+		tf_companyId=new JTextField(10);
+		tf_companyId.setEditable(false);
+		tf_os=new JTextField(10);
+		tf_technologies=new JTextField(10);		
+		tf_scriptLanguages=new JTextField(10);
+		tf_databases=new JTextField(10);
+		tf_frameworks=new JTextField(10);
+		tf_testingTools=new JTextField(10);
+		tf_otherSkills=new JTextField(10);
+		
+
+		lbl_companyId=new JLabel("Company Id");
+		lbl_os=new JLabel("Operating Systems");
+		lbl_technologies=new JLabel("Technologies");
+		lbl_scriptLanguages=new JLabel("Scripting Languages");
+		lbl_databases=new JLabel("Databases");
+		lbl_frameworks=new JLabel("Frameworks");
+		lbl_testingTools=new JLabel("Testing Tools");
+		lbl_otherSkills=new JLabel("Other Skills");
+
+		lbl_empty1=new JLabel("");
+		lbl_empty2=new JLabel("");
+
+
+		lbl_heading=new JLabel("Company Skill Set Requirements");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+		
+
+
+		btn_first=new JButton("FIRST");
+		btn_previous=new JButton("PREVIOUS");
+		btn_next=new JButton("NEXT ");
+		btn_last=new JButton("LAST");
+
+		btn_add=new JButton("ADD");
+		btn_edit=new JButton("EDIT");
+		btn_save=new JButton("SAVE & CONTINUE");
+		btn_save.setEnabled(false);
+		btn_delete=new JButton("DELETE");
+		btn_view=new JButton("VIEW ALL");
+		btn_cancel=new JButton("CANCEL");	
+	
+		btn_nextRecord=new JButton("NEXT RECORD");
+		btn_previousRecord=new JButton("PREVIOUS RECORD");
+
+		btn_first.addActionListener(this);
+		btn_previous.addActionListener(this);
+		btn_next.addActionListener(this);
+		btn_last.addActionListener(this);
+		btn_add.addActionListener(this);
+		btn_edit.addActionListener(this);
+		btn_save.addActionListener(this);
+		btn_delete.addActionListener(this);
+		btn_view.addActionListener(this);
+		btn_cancel.addActionListener(this);
+		btn_nextRecord.addActionListener(this);
+		btn_previousRecord.addActionListener(this);
+		
+			
+		
+		panalCenter.setLayout(new GridLayout(15,2,5,5));
+		panalSouth.setLayout(new GridLayout(1,4,5,5));
+		panalEast.setLayout(new GridLayout(15,1,5,5));
+		panel_heading.setLayout(new GridLayout(4,1));
+		
+		panel_heading.add(lbl_empty1);
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lbl_empty2);
+		panel_heading.add(lblMessage);
+		
+		
+		panalCenter.add(lbl_companyId);
+		panalCenter.add(tf_companyId);
+		panalCenter.add(lbl_os);
+		panalCenter.add(tf_os);
+		panalCenter.add(lbl_technologies);
+		panalCenter.add(tf_technologies);
+		panalCenter.add(lbl_scriptLanguages);
+		panalCenter.add(tf_scriptLanguages);
+		panalCenter.add(lbl_databases);
+		panalCenter.add(tf_databases);
+		panalCenter.add(lbl_frameworks);
+		panalCenter.add(tf_frameworks);
+		panalCenter.add(lbl_testingTools);
+		panalCenter.add(tf_testingTools);
+		panalCenter.add(lbl_otherSkills);
+		panalCenter.add(tf_otherSkills);
+
+
+		panalSouth.add(btn_first);
+		panalSouth.add(btn_previous);
+		panalSouth.add(btn_next);
+		panalSouth.add(btn_last);
+	
+		
+		panalEast.add(btn_nextRecord);
+		panalEast.add(btn_previousRecord);
+		if(MainFrame.userStatus.equalsIgnoreCase("operator")){
+			panalEast.add(btn_add);
+		}
+		panalEast.add(btn_edit);
+		panalEast.add(btn_save);
+		panalEast.add(btn_delete);
+		panalEast.add(btn_view);
+		panalEast.add(btn_cancel);
+
+		
+		add(panel_heading,BorderLayout.NORTH);
+		add(panalCenter,BorderLayout.CENTER);
+		add(panalSouth,BorderLayout.SOUTH);
+		add(panalEast,BorderLayout.EAST);
+
+		setVisible(true);
+		if(type.equals("navigate")){
+			this.count=count;
+			MainFrame.staticArraylist=db_obj.getCompanyRecords();
+			if(MainFrame.staticArraylist.size()>0){
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+		if(type.equals("save")) {
+			MainFrame.staticArraylist=db_obj.getCompanyRecords();
+			tf_companyId.setText(String.valueOf(count));
+			btn_edit.setEnabled(false);
+			btn_add.setEnabled(false);
+			btn_nextRecord.setVisible(false);
+			btn_previousRecord.setVisible(false);
+			btn_save.setEnabled(true);
+			editSaveFlag="save";
+		}
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+	
+		if(ae.getSource()==btn_add){
+			clear();
+			btn_save.setEnabled(true);
+			editSaveFlag="save";
+
+		}
+
+		if(ae.getSource()==btn_edit){
+			editSaveFlag="edit";
+			lblMessage.setText("");
+			btn_save.setEnabled(true);
+		}
+
+		if(ae.getSource()==btn_save){
+
+			int flag=0;
+			/*if(tf_testingTools.getText().equals("")){
+				lblMessage.setText("Enter testing tools");
+				flag=1;		
+			}
+			if(tf_frameworks.getText().equals("")){
+				lblMessage.setText("Enter frameworks");								
+				flag=1;				
+			}
+			if(tf_databases.getText().equals("")){
+				lblMessage.setText("Enter database");								
+				flag=1;				
+			}
+
+			if(tf_scriptLanguages.getText().equals("")){
+				lblMessage.setText("Enter Scripting Languages");	
+				flag=1;	
+		  	}
+			if(tf_technologies.getText().equals("")){
+				lblMessage.setText("Enter technologies ");	
+				flag=1;				
+			}
+			if(tf_os.getText().equals("")){
+				lblMessage.setText("Enter operating system ");								
+				flag=1;				
+			}
+			try{
+				int pid= Integer.parseInt(tf_companyId.getText());
+			}
+
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("Enter number for company id");
+				flag=1;	
+		  	}
+			*/
+
+									
+			if(editSaveFlag.equals("save") && flag==0){
+				//String result=db_obj.saveCompanySkillSetRequirements(Integer.parseInt(tf_companyId.getText()),tf_os.getText(),tf_technologies.getText(),tf_scriptLanguages.getText(),tf_databases.getText(),tf_frameworks.getText(),tf_testingTools.getText(),tf_otherSkills.getText());
+				String result=db_obj.updateCompanySkillSetRequirements(Integer.parseInt(tf_companyId.getText()),tf_os.getText(),tf_technologies.getText(),tf_scriptLanguages.getText(),tf_databases.getText(),tf_frameworks.getText(),tf_testingTools.getText(),tf_otherSkills.getText());
+				if(result.equals("failed")){
+					lblMessage.setText("Record not saved");					
+				}
+				else if(result.equals("updated")){
+				                  Component[] c=MainFrame.container.getComponents();
+        					  for(int i=0;i<c.length;i++)
+					  {
+					               	  MainFrame.container.remove(c[i]);
+					  }
+					MainFrame.container.add(new ManageCompanyDetail(0,"navigate"));
+					MainFrame.container.setVisible(false);
+					MainFrame.container.setVisible(true);
+				}
+			}
+			if(editSaveFlag.equals("edit") && flag==0){
+				String result=db_obj.updateCompanySkillSetRequirements(Integer.parseInt(tf_companyId.getText()),tf_os.getText(),tf_technologies.getText(),tf_scriptLanguages.getText(),tf_databases.getText(),tf_frameworks.getText(),tf_testingTools.getText(),tf_otherSkills.getText());
+				if(result.equals("updated")){
+				                  Component[] c=MainFrame.container.getComponents();
+        					  for(int i=0;i<c.length;i++)
+					  {
+					               	  MainFrame.container.remove(c[i]);
+					  }
+					MainFrame.container.add(new ManageCompanyDetail(count,"navigate"));
+					MainFrame.container.setVisible(false);
+					MainFrame.container.setVisible(true);	
+				}
+				else{
+					lblMessage.setText("Record not updated");
+				}
+			}
+		}
+
+		if(ae.getSource()==btn_first){
+			count=0;
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+
+		if(ae.getSource()==btn_previous){
+			if(count==0)
+			{
+			}
+			else
+			{
+				count--;
+			}	
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+		
+		if(ae.getSource()==btn_next){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				if(count==(MainFrame.staticArraylist.size()-1))
+				{}
+				else
+				{
+					count++;
+				}
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}			
+		}
+		
+		if(ae.getSource()==btn_last){
+			count=MainFrame.staticArraylist.size()-1;
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+				showRecords(company_obj);
+			}
+		}
+
+
+		if(ae.getSource()==btn_cancel){	
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+		}
+		if(ae.getSource()==btn_view){
+			ReportCompanySkillSetRequirements obj=new ReportCompanySkillSetRequirements();
+		
+		}
+	
+		if(ae.getSource()==btn_nextRecord){
+		
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageCompanyDetail(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+		if(ae.getSource()==btn_previousRecord){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			               	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageCompanyRequirement(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+		if(ae.getSource()==btn_delete){
+			String result=db_obj.deleteCompany(Integer.parseInt(tf_companyId.getText()));
+			MainFrame.staticArraylist=db_obj.getCompanyRecords();
+			if(result.equals("deleted")){
+				count=0;
+				if(MainFrame.staticArraylist.size()>0)
+				{
+					CompanySkillSetBean company_obj=(CompanySkillSetBean)MainFrame.staticArraylist.get(count);
+					showRecords(company_obj);
+				}
+			}
+			else{	
+				lblMessage.setText("Unable to delete");				
+			}			
+			
+		}
+
+
+	}
+	
+	public void clear(){
+		//tf_companyId.setText("");
+		tf_os.setText("");
+		tf_technologies.setText("");
+		tf_scriptLanguages.setText("");
+		tf_databases.setText("");
+		tf_frameworks.setText("");
+		tf_testingTools.setText("");
+		tf_otherSkills.setText("");
+	}
+
+	public void showRecords(CompanySkillSetBean company_obj){
+		tf_companyId.setText(String.valueOf(company_obj.getCompanyId()));
+		tf_os.setText(company_obj.getOperatingSystem());
+		tf_technologies.setText(company_obj.getTechnologies());
+		tf_scriptLanguages.setText(company_obj.getScriptingLanguages());
+		tf_databases.setText(company_obj.getDatabases());
+		tf_frameworks.setText(company_obj.getFrameworks());
+		tf_testingTools.setText(company_obj.getTestingTools());
+		tf_otherSkills.setText(company_obj.getOtherSkills());
+
+		lblMessage.setText("");
+		btn_add.setEnabled(true);
+		btn_edit.setEnabled(true);
+		btn_nextRecord.setVisible(true);
+		btn_previousRecord.setVisible(true);
+		btn_save.setEnabled(false);
+		editSaveFlag="";
+	}
+	
+}import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.sql.Date;
+public class ManageEmployeePanel extends JPanel implements ActionListener
+{
+	JPanel p1,p2,p3,panel_heading;
+	JTextField tf_empid,tf_username,tf_password,tf_status,tf_FName,tf_MName,tf_LName,tf_FFName,tf_FMName,tf_FLName,tf_address,tf_mobile,tf_email,tf_dob,tf_pan;
+	JButton btn_first,btn_previous,btn_next,btn_last,btn_save,btn_view,btn_cancel,btn_add,btn_edit,btn_delete;
+	JLabel l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,lbl_heading,lblMessage;
+
+	ArrayList arraylist_emp;
+
+	prtsDb db_obj=new prtsDb();
+	int count=0;
+	String editSaveFlag="none";
+	
+	public ManageEmployeePanel()
+	{
+
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		p1=new JPanel();
+		p2=new JPanel();
+		p3=new JPanel();
+		panel_heading=new JPanel();
+
+		tf_empid=new JTextField(10);
+		tf_empid.setEditable(false);
+		tf_username=new JTextField(10);
+		tf_password=new JTextField(10);
+		tf_status=new JTextField(10);
+		tf_FName=new JTextField(10);
+		tf_MName=new JTextField(10);
+		tf_LName=new JTextField(10);		
+		tf_FFName=new JTextField(10);
+		tf_FMName=new JTextField(10);
+		tf_FLName=new JTextField(10);
+		tf_address=new JTextField(10);
+		tf_mobile=new JTextField(10);
+		tf_email=new JTextField(10);
+		tf_dob=new JTextField(10);
+		tf_pan=new JTextField(10);
+
+		btn_first=new JButton("FIRST");
+		btn_previous=new JButton("PREVIOUS");
+		btn_next=new JButton("NEXT ");
+		btn_last=new JButton("LAST");
+
+		btn_add=new JButton("ADD");
+		btn_edit=new JButton("EDIT");
+		btn_save=new JButton("SAVE");
+		btn_save.setEnabled(false);
+		btn_delete=new JButton("DELETE");
+		btn_view=new JButton("VIEW ALL");
+		btn_cancel=new JButton("CANCEL");		
+		
+		l1=new JLabel("Employee Id");
+		l2=new JLabel("Username");
+		l3=new JLabel("Password");
+		l4=new JLabel("Status");
+		l5=new JLabel("First Name");
+		l6=new JLabel("Middle Name");
+		l7=new JLabel("Last Name");
+		l8=new JLabel("Father's First Name");
+		l9=new JLabel("Father's Middle Name");
+		l10=new JLabel("Father's Last Name");
+		l11=new JLabel("Address");
+		l12=new JLabel("Mobile");
+		l13=new JLabel("Email");
+		l14=new JLabel("Date Of Birth");
+		l15=new JLabel("PAN");
+
+
+		lbl_heading=new JLabel("Employee Personal Record");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+			
+		
+		p1.setLayout(new GridLayout(15,2,5,5));
+		p2.setLayout(new GridLayout(1,4,5,5));
+		p3.setLayout(new GridLayout(15,1,5,5));
+		panel_heading.setLayout(new GridLayout(2,1));
+
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lblMessage);
+		
+		
+		p1.add(l1);
+		p1.add(tf_empid);
+		p1.add(l2);
+		p1.add(tf_username);
+		p1.add(l3);
+		p1.add(tf_password);
+		p1.add(l4);
+		p1.add(tf_status);
+		p1.add(l5);
+		p1.add(tf_FName);
+		p1.add(l6);
+		p1.add(tf_MName);
+		p1.add(l7);
+		p1.add(tf_LName);
+		p1.add(l8);
+		p1.add(tf_FFName);
+		p1.add(l9);
+		p1.add(tf_FMName);
+		p1.add(l10);
+		p1.add(tf_FLName);
+		p1.add(l11);
+		p1.add(tf_address);
+		p1.add(l12);
+		p1.add(tf_mobile);
+		p1.add(l13);
+		p1.add(tf_email);
+		p1.add(l14);
+		p1.add(tf_dob);
+		p1.add(l15);
+		p1.add(tf_pan);
+
+		p2.add(btn_first);
+		p2.add(btn_previous);
+		p2.add(btn_next);
+		p2.add(btn_last);
+		
+		p3.add(btn_add);
+		p3.add(btn_edit);
+		p3.add(btn_save);
+		p3.add(btn_delete);
+
+		p3.add(btn_view);
+		p3.add(btn_cancel);
+
+		
+		add(panel_heading,BorderLayout.NORTH);
+		add(p1,BorderLayout.CENTER);
+		add(p2,BorderLayout.SOUTH);
+		add(p3,BorderLayout.EAST);
+
+		btn_first.addActionListener(this);
+		btn_previous.addActionListener(this);
+		btn_next.addActionListener(this);
+		btn_last.addActionListener(this);
+		btn_add.addActionListener(this);
+		btn_edit.addActionListener(this);
+		btn_save.addActionListener(this);
+		btn_delete.addActionListener(this);
+		btn_view.addActionListener(this);
+		btn_cancel.addActionListener(this);
+
+		setVisible(true);
+
+		arraylist_emp=db_obj.getEmployeeRecords();
+		if(arraylist_emp.size()>0){
+			EmployeeBean emp_obj=(EmployeeBean)arraylist_emp.get(count);
+			showRecords(emp_obj);
+		}
+		
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==btn_add){
+			clear();
+			btn_save.setEnabled(true);
+			editSaveFlag="save";
+
+		}
+
+		if(ae.getSource()==btn_edit){
+			editSaveFlag="edit";
+			btn_save.setEnabled(true);
+		}
+
+		if(ae.getSource()==btn_save){
+
+			int flag=0;
+			if(tf_pan.getText().equals("")){
+				lblMessage.setText("Enter employee PAN");								
+				flag=1;				
+			}
+			try{
+				String dob= tf_dob.getText();
+				Date dd= new Date(200);
+	 			dd=Date.valueOf(dob);
+			}
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("Date Format is (yyyy-mm-dd) ");
+				flag=1;	
+		  	}
+
+			try{
+				Long mobile=Long.parseLong(tf_mobile.getText());
+			}
+			catch(NumberFormatException e)
+ 			{
+				lblMessage.setText("Enter number for mobile number");
+				flag=1;
+	           		}
+			if(tf_username.getText().equals("")){
+				lblMessage.setText("Enter employee useraname");								
+				flag=1;
+			}
+			else if(tf_password.getText().equals("")){
+				lblMessage.setText("Enter employee password");								
+				flag=1;
+			}
+			else if(tf_status.getText().equals("")){
+				lblMessage.setText("Enter employee status");								
+				flag=1;
+			}
+			else if(tf_FName.getText().equals("")){
+				lblMessage.setText("Enter employee's first name");
+				flag=1;
+			}
+			else if(tf_LName.getText().equals("")){
+				lblMessage.setText("Enter employee's last name");
+				flag=1;
+			}
+			else if(tf_FFName.getText().equals("")){
+				lblMessage.setText("Enter employee father's first name");				
+				flag=1;
+			}
+			else if(tf_FLName.getText().equals("")){
+				lblMessage.setText("Enter employee father's last name");								
+				flag=1;
+			}
+			else if(tf_address.getText().equals("")){
+				lblMessage.setText("Enter employee's address");								
+				flag=1;
+			}
+						
+			if(editSaveFlag.equals("save") && flag==0){
+					String result=db_obj.saveEmployeeDetails(tf_username.getText(),tf_password.getText(),tf_status.getText(),tf_FName.getText(),tf_MName.getText(),tf_LName.getText(),tf_FFName.getText(),tf_FMName.getText(),tf_FLName.getText(),tf_address.getText(),tf_mobile.getText(),tf_email.getText(),tf_dob.getText(),tf_pan.getText());
+					if(result.equals("exists")){
+							lblMessage.setText("Username already exists");
+					}
+					else if(result.equals("failed")){
+						lblMessage.setText("Record not saved");					
+					}
+					else if(result.equals("saved")){
+							lblMessage.setText("Record added successfully");
+							arraylist_emp=db_obj.getEmployeeRecords();
+							count=0;
+							if(arraylist_emp.size()>0){
+								EmployeeBean emp_obj=(EmployeeBean)arraylist_emp.get(count);
+								showRecords(emp_obj);
+							}
+							
+							btn_save.setEnabled(false);
+					}
+				}
+			if(editSaveFlag.equals("edit") && flag==0){
+					String result=db_obj.updateEmployeeDetails(Integer.parseInt(tf_empid.getText()),tf_username.getText(),tf_password.getText(),tf_status.getText(),tf_FName.getText(),tf_MName.getText(),tf_LName.getText(),tf_FFName.getText(),tf_FMName.getText(),tf_FLName.getText(),tf_address.getText(),tf_mobile.getText(),tf_email.getText(),tf_dob.getText(),tf_pan.getText());
+					if(result.equals("updated")){
+						lblMessage.setText("Record updated sucessfully");
+						arraylist_emp=db_obj.getEmployeeRecords();
+						if(arraylist_emp.size()>0){
+							EmployeeBean emp_obj=(EmployeeBean)arraylist_emp.get(count);
+							showRecords(emp_obj);
+							btn_save.setEnabled(false);
+						}
+						
+					}
+					else{
+						lblMessage.setText("Record not updated");
+						
+					}
+				}
+		}
+
+		if(ae.getSource()==btn_first){
+			count=0;
+			if(arraylist_emp.size()>0)
+			{
+				EmployeeBean emp_obj=(EmployeeBean)arraylist_emp.get(count);
+				showRecords(emp_obj);
+			}
+		}
+
+		if(ae.getSource()==btn_previous){
+			if(count==0)
+			{
+			}
+			else
+			{
+				count--;
+			}	
+			if(arraylist_emp.size()>0)
+			{
+				EmployeeBean emp_obj=(EmployeeBean)arraylist_emp.get(count);
+				showRecords(emp_obj);
+			}
+		}
+		
+		if(ae.getSource()==btn_next){
+			if(arraylist_emp.size()>0)
+			{
+				if(count==(arraylist_emp.size()-1))
+				{}
+				else
+				{
+					count++;
+				}
+				EmployeeBean emp_obj=(EmployeeBean)arraylist_emp.get(count);
+				showRecords(emp_obj);
+			}			
+		}
+		
+		if(ae.getSource()==btn_last){
+			count=arraylist_emp.size()-1;
+			if(arraylist_emp.size()>0)
+			{
+				EmployeeBean emp_obj=(EmployeeBean)arraylist_emp.get(count);
+				showRecords(emp_obj);
+			}
+		}
+
+		if(ae.getSource()==btn_cancel){	
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+		}
+		if(ae.getSource()==btn_view){
+			ReportEmployeeDetails obj=new ReportEmployeeDetails();
+		
+		}
+	
+		if(ae.getSource()==btn_delete){
+			String delete=db_obj.deleteEmployee(Integer.parseInt(tf_empid.getText()))	;
+			if(delete.equals("deleted")){
+				arraylist_emp=db_obj.getEmployeeRecords();
+				count=0;
+				if(arraylist_emp.size()>0){
+					EmployeeBean emp_obj=(EmployeeBean)arraylist_emp.get(count);
+					showRecords(emp_obj);
+				}
+			}
+		}
+	}
+	
+	public void clear(){
+		tf_empid.setText("");
+		tf_username.setText("");
+		tf_password.setText("");
+		tf_status.setText("");
+		tf_FName.setText("");
+		tf_MName.setText("");
+		tf_LName.setText("");
+		tf_FFName.setText("");
+		tf_FMName.setText("");
+		tf_FLName.setText("");
+		tf_address.setText("");
+		tf_mobile.setText("");
+		tf_email.setText("");
+		tf_dob.setText("");
+		tf_pan.setText("");
+	}
+
+	public void showRecords(EmployeeBean emp_obj){
+		tf_empid.setText(String.valueOf(emp_obj.getEmpId()));
+		tf_username.setText(emp_obj.getUsername());
+		tf_password.setText(emp_obj.getEmpPassword());
+		tf_status.setText(emp_obj.getEmpStatus());
+		tf_FName.setText(emp_obj.getEmpFName());
+		tf_MName.setText(emp_obj.getEmpMName());
+		tf_LName.setText(emp_obj.getEmpLName());
+		tf_FFName.setText(emp_obj.getEmpFFName());
+		tf_FMName.setText(emp_obj.getEmpFMName());
+		tf_FLName.setText(emp_obj.getEmpFLName());
+		tf_address.setText(emp_obj.getEmpAddress());
+		tf_mobile.setText(emp_obj.getEmpMobile());
+		tf_email.setText(emp_obj.getEmpEmail());
+		tf_dob.setText(emp_obj.getEmpDOB());
+		tf_pan.setText(emp_obj.getEmpPAN());
+		lblMessage.setText("");
+		btn_save.setEnabled(false);
+		editSaveFlag="";
+	}
+
+	
+}import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.sql.Date;
+public class ManageProExperience extends JPanel implements ActionListener
+{
+	JPanel panalCenter,panalSouth,panalEast,panel_heading;
+	JTextField tf_proId,tf_startDate,tf_endDate,tf_companyName,tf_location,tf_designation,tf_jobProfile,tf_salaryPackage;
+	JTextField tf_experienceId;
+	JButton btn_first,btn_previous,btn_next,btn_last,btn_save,btn_view,btn_cancel,btn_add,btn_edit,btn_delete;
+	JButton btn_nextRecord,btn_previousRecord;  //to navigate between professionals varius details	
+	JButton btn_addExperience;
+	JLabel lblProfId,lbl_experienceId,lbl_startDate,lbl_endDate,lbl_companyName,lbl_location,lbl_designation,lbl_jobProfile,lbl_heading,lblMessage,lbl_salaryPackage;
+	JLabel lbl_empty1,lbl_empty2,lbl_empty3,lbl_empty4,lbl_empty5,lbl_empty6;
+	
+	
+
+	prtsDb db_obj=new prtsDb();
+	int count=0;
+	int localCount=0;
+	String editSaveFlag="none";
+	
+	
+	public ManageProExperience(int count,String type)
+	{
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		panalCenter=new JPanel();
+		panalSouth=new JPanel();
+		panalEast=new JPanel();
+		panel_heading=new JPanel();
+
+		tf_experienceId=new JTextField(10);
+		tf_experienceId.setEditable(false);
+		tf_proId=new JTextField(10);
+		tf_proId.setEditable(false);
+		tf_startDate=new JTextField(10);
+		tf_endDate=new JTextField(10);		
+		tf_companyName=new JTextField(10);
+		tf_location=new JTextField(10);
+		tf_designation=new JTextField(10);
+		tf_jobProfile=new JTextField(10);
+		tf_salaryPackage=new JTextField(10);
+		
+		lbl_experienceId=new JLabel("Experience Id");
+		lblProfId=new JLabel("Professional Id");
+		lbl_startDate=new JLabel("Start Date");
+		lbl_endDate=new JLabel("End Date");
+		lbl_companyName=new JLabel("Company Name");
+		lbl_location=new JLabel("Location");
+		lbl_designation=new JLabel("Designation");
+		lbl_jobProfile=new JLabel("Job Profile");
+		lbl_salaryPackage=new JLabel("Salary Package");
+
+		lbl_empty1=new JLabel("");
+		lbl_empty2=new JLabel("");
+
+
+		lbl_heading=new JLabel("Professional Experience Record");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+		
+
+
+		btn_first=new JButton("FIRST");
+		btn_previous=new JButton("PREVIOUS");
+		btn_next=new JButton("NEXT ");
+		btn_last=new JButton("LAST");
+
+		btn_add=new JButton("ADD EXPERIENCE");
+		btn_edit=new JButton("EDIT");
+		btn_save=new JButton("SAVE");
+		btn_save.setEnabled(false);
+		btn_delete=new JButton("DELETE");
+		btn_view=new JButton("VIEW ALL");
+		btn_cancel=new JButton("CANCEL");	
+	
+		btn_nextRecord=new JButton("NEXT RECORD");
+		btn_previousRecord=new JButton("PREVIOUS RECORD");
+
+		btn_first.addActionListener(this);
+		btn_previous.addActionListener(this);
+		btn_next.addActionListener(this);
+		btn_last.addActionListener(this);
+		btn_add.addActionListener(this);
+		btn_edit.addActionListener(this);
+		btn_save.addActionListener(this);
+		btn_delete.addActionListener(this);
+		btn_view.addActionListener(this);
+		btn_cancel.addActionListener(this);
+		btn_nextRecord.addActionListener(this);
+		btn_previousRecord.addActionListener(this);
+
+		btn_addExperience=new JButton("Add Experience");
+		
+		panalCenter.setLayout(new GridLayout(15,2,5,5));
+		panalSouth.setLayout(new GridLayout(1,4,5,5));
+		panalEast.setLayout(new GridLayout(15,1,5,5));
+		panel_heading.setLayout(new GridLayout(4,1));
+		
+		panel_heading.add(lbl_empty1);
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lbl_empty2);
+		panel_heading.add(lblMessage);
+		
+		panalCenter.add(lbl_experienceId);
+		panalCenter.add(tf_experienceId);		
+		panalCenter.add(lblProfId);
+		panalCenter.add(tf_proId);
+		panalCenter.add(lbl_startDate);
+		panalCenter.add(tf_startDate);
+		panalCenter.add(lbl_endDate);
+		panalCenter.add(tf_endDate);
+		panalCenter.add(lbl_companyName);
+		panalCenter.add(tf_companyName);
+		panalCenter.add(lbl_location);
+		panalCenter.add(tf_location);
+		panalCenter.add(lbl_designation);
+		panalCenter.add(tf_designation);
+		panalCenter.add(lbl_jobProfile);
+		panalCenter.add(tf_jobProfile);
+		panalCenter.add(lbl_salaryPackage);
+		panalCenter.add(tf_salaryPackage);
+
+
+		panalSouth.add(btn_first);
+		panalSouth.add(btn_previous);
+		panalSouth.add(btn_next);
+		panalSouth.add(btn_last);
+		
+		panalEast.add(btn_nextRecord);
+		panalEast.add(btn_previousRecord);
+		//panalEast.add(btn_addExperience);
+		if(MainFrame.userStatus.equalsIgnoreCase("operator")){
+			panalEast.add(btn_add);
+		}
+		panalEast.add(btn_edit);
+		panalEast.add(btn_save);
+		panalEast.add(btn_delete);
+
+		panalEast.add(btn_view);
+		panalEast.add(btn_cancel);
+
+		
+		add(panel_heading,BorderLayout.NORTH);
+		add(panalCenter,BorderLayout.CENTER);
+		add(panalSouth,BorderLayout.SOUTH);
+		add(panalEast,BorderLayout.EAST);
+
+
+		setVisible(true);
+		if(type.equals("navigate")){
+			this.count=count;
+		}
+
+
+		MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+		
+		if(MainFrame.staticArraylist.size()>0){
+			ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+			ArrayList al_experience=pro_container.getExperience();
+			if(al_experience.size()>0){
+				ProfessionalExperienceBean pro_obj=(ProfessionalExperienceBean)al_experience.get(localCount);
+				showRecords(pro_obj);
+			}
+		}
+		
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==btn_add){
+			clear();
+			btn_save.setEnabled(true);
+			editSaveFlag="save";
+
+		}
+
+		if(ae.getSource()==btn_edit){
+			editSaveFlag="edit";
+			lblMessage.setText("");
+			btn_save.setEnabled(true);
+		}
+
+		if(ae.getSource()==btn_save){
+
+			int flag=0;
+			try{	
+				Double per=Double.parseDouble(tf_salaryPackage.getText());
+			}
+			catch(NumberFormatException e){
+				lblMessage.setText("Enter number for  salary");
+				flag=1;
+			}
+			if(tf_jobProfile.getText().equals("")){
+				lblMessage.setText("Enter Job Profile ");								
+				flag=1;				
+			}
+			if(tf_designation.getText().equals("")){
+				lblMessage.setText("Enter designtion ");								
+				flag=1;				
+			}
+			if(tf_location.getText().equals("")){
+				lblMessage.setText("Enter location name");								
+				flag=1;				
+			}
+
+			if(tf_companyName.getText().equals("")){
+				lblMessage.setText("Enter company  name");
+				flag=1;				
+			}
+			try{
+				String end= tf_endDate.getText();
+         				Date dd= new Date(200);
+		 		dd=Date.valueOf(end);
+			}
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("End Date Format is (yyyy-mm-dd) ");
+				flag=1;	
+		  	}
+
+			try{
+				String start= tf_startDate.getText();
+         				Date dd= new Date(200);
+		 		dd=Date.valueOf(start);
+			}
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("Start Date Format is (yyyy-mm-dd) ");
+				flag=1;	
+		  	}
+									
+			if(editSaveFlag.equals("save") && flag==0){
+				System.out.println("here");
+					String result=db_obj.saveProExperienceDetails(Integer.parseInt(tf_proId.getText()),tf_startDate.getText(),tf_endDate.getText(),tf_companyName.getText(),tf_location.getText(),tf_designation.getText(),tf_jobProfile.getText(),Double.parseDouble(tf_salaryPackage.getText()));
+					if(result.equals("failed")){
+						lblMessage.setText("Record not saved");					
+					}
+					else if(result.equals("saved")){
+							lblMessage.setText("Record added successfully");
+							MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+							localCount=0;
+							if(MainFrame.staticArraylist.size()>0){
+								ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+								ArrayList al_experience=pro_container.getExperience();
+								if(al_experience.size()>0){
+									ProfessionalExperienceBean pro_obj=(ProfessionalExperienceBean)al_experience.get(localCount);
+									showRecords(pro_obj);
+								}
+							}
+							btn_save.setEnabled(false);
+					}
+			}
+			if(editSaveFlag.equals("edit") && flag==0){
+					String result=db_obj.updateProExperienceDetails(Integer.parseInt(tf_experienceId.getText()),Integer.parseInt(tf_proId.getText()),tf_startDate.getText(),tf_endDate.getText(),tf_companyName.getText(),tf_location.getText(),tf_designation.getText(),tf_jobProfile.getText(),Double.parseDouble(tf_salaryPackage.getText()));
+					if(result.equals("updated")){
+						MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+						if(MainFrame.staticArraylist.size()>0){
+							ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+							ArrayList al_experience=pro_container.getExperience();
+							if(al_experience.size()>0){
+								ProfessionalExperienceBean pro_obj=(ProfessionalExperienceBean)al_experience.get(localCount);
+								showRecords(pro_obj);
+							}
+						}
+						btn_save.setEnabled(false);						
+						lblMessage.setText("Record updated sucessfully");						
+					}
+					else{
+						lblMessage.setText("Record not updated");
+						
+					}
+			}
+		}
+
+		if(ae.getSource()==btn_first){
+			if(MainFrame.staticArraylist.size()>0){
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_experience=pro_container.getExperience();
+				if(al_experience.size()>0){
+					localCount=0;
+					ProfessionalExperienceBean pro_obj=(ProfessionalExperienceBean)al_experience.get(localCount);
+					showRecords(pro_obj);
+				}
+			}
+		}
+
+		if(ae.getSource()==btn_previous){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_experience=pro_container.getExperience();
+				if(al_experience.size()>0){	
+					if(localCount==0)
+					{}
+					else
+					{
+						localCount--;
+					}
+						ProfessionalExperienceBean pro_obj=(ProfessionalExperienceBean)al_experience.get(localCount);
+						showRecords(pro_obj);
+				}
+			}
+		}
+		
+		if(ae.getSource()==btn_next){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_experience=pro_container.getExperience();
+				if(al_experience.size()>0){	
+					if(localCount==(al_experience.size()-1))
+					{}
+					else
+					{
+						localCount++;
+					}
+						ProfessionalExperienceBean pro_obj=(ProfessionalExperienceBean)al_experience.get(localCount);
+						showRecords(pro_obj);
+				}
+			}			
+		}
+		
+		if(ae.getSource()==btn_last){
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_experience=pro_container.getExperience();
+				if(al_experience.size()>0){
+					localCount=al_experience.size()-1;
+					ProfessionalExperienceBean pro_obj=(ProfessionalExperienceBean)al_experience.get(localCount);
+					showRecords(pro_obj);
+				}
+			
+		}
+
+		if(ae.getSource()==btn_cancel){	
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+		}
+		if(ae.getSource()==btn_view){
+			if(MainFrame.staticArraylist.size()>0){
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_experience=pro_container.getExperience();
+				ReportProfessionalExperience obj=new ReportProfessionalExperience(al_experience);
+			}
+			else{
+				JOptionPane.showMessageDialog(this,"There are no records to display","",JOptionPane.INFORMATION_MESSAGE);
+			}
+		
+		}
+
+		if(ae.getSource()==btn_nextRecord){
+		
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageProProjects(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+		if(ae.getSource()==btn_previousRecord){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageProSkillSet(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+
+		if(ae.getSource()==btn_delete){
+			String result=db_obj.deleteProfessionalExperience(Integer.parseInt(tf_experienceId.getText()));
+			if(result.equals("deleted")){
+				MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+				if(MainFrame.staticArraylist.size()>0){
+					ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+					ArrayList al_experience=pro_container.getExperience();
+					if(al_experience.size()>0){
+						localCount=0;
+						ProfessionalExperienceBean pro_obj=(ProfessionalExperienceBean)al_experience.get(localCount);
+						showRecords(pro_obj);
+					}
+				}
+			}
+			else{
+				lblMessage.setText("Unable to delete");
+			}
+		}
+		
+
+
+	}
+	
+	public void clear(){
+		tf_experienceId.setText("");
+		tf_startDate.setText("");
+		tf_endDate.setText("");
+		tf_companyName.setText("");
+		tf_location.setText("");
+		tf_designation.setText("");
+		tf_jobProfile.setText("");
+		tf_salaryPackage.setText("");
+	}
+
+	public void showRecords(ProfessionalExperienceBean pro_obj){
+		
+		tf_experienceId.setText(String.valueOf(pro_obj.getExperienceId()));
+		tf_proId.setText(String.valueOf(pro_obj.getProfId()));
+		tf_startDate.setText(pro_obj.getStartDate());
+		tf_endDate.setText(pro_obj.getEndDate());
+		tf_companyName.setText(pro_obj.getCompanyName());
+		tf_location.setText(pro_obj.getLocation());
+		tf_designation.setText(pro_obj.getDesignation());
+		tf_jobProfile.setText(pro_obj.getJobProfile());
+		tf_salaryPackage.setText(String.valueOf(pro_obj.getSalaryPackage()));
+
+		lblMessage.setText("");
+		btn_save.setEnabled(false);
+		editSaveFlag="";
+	}
+
+	
+}import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.sql.Date;
+public class ManageProPersonal extends JPanel implements ActionListener
+{
+	JPanel p1,p2,p3,panel_heading;
+	JTextField tf_proId,tf_FName,tf_MName,tf_LName,tf_FFName,tf_FMName,tf_FLName,tf_address,tf_mobile,tf_email,tf_dob,tf_pan,tf_expectedSalary;
+	JButton btn_first,btn_previous,btn_next,btn_last,btn_save,btn_view,btn_cancel,btn_add,btn_edit,btn_delete;
+	JButton btn_nextRecord,btn_previousRecord;  //to navigate between professionals varius details	
+	JLabel l1,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,lbl_heading,lblMessage;
+	JLabel lbl_empty1,lbl_empty2;
+
+	prtsDb db_obj=new prtsDb();
+	int count=0;
+	String editSaveFlag="none";
+	
+	public ManageProPersonal(int count,String type)
+	{
+
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		p1=new JPanel();
+		p2=new JPanel();
+		p3=new JPanel();
+		panel_heading=new JPanel();
+
+		tf_proId=new JTextField(10);
+		tf_proId.setEditable(false);
+		tf_FName=new JTextField(10);
+		tf_MName=new JTextField(10);
+		tf_LName=new JTextField(10);		
+		tf_FFName=new JTextField(10);
+		tf_FMName=new JTextField(10);
+		tf_FLName=new JTextField(10);
+		tf_address=new JTextField(10);
+		tf_mobile=new JTextField(10);
+		tf_email=new JTextField(10);
+		tf_dob=new JTextField(10);
+		tf_pan=new JTextField(10);
+		tf_expectedSalary=new JTextField(10);
+
+		btn_first=new JButton("FIRST");
+		btn_previous=new JButton("PREVIOUS");
+		btn_next=new JButton("NEXT ");
+		btn_last=new JButton("LAST");
+
+		btn_add=new JButton("ADD");
+		btn_edit=new JButton("EDIT");
+		btn_save=new JButton("SAVE");
+		btn_save.setEnabled(false);
+		btn_delete=new JButton("DELETE");
+		btn_view=new JButton("VIEW ALL");
+		btn_cancel=new JButton("CANCEL");	
+	
+		btn_nextRecord=new JButton("NEXT RECORD");
+		btn_previousRecord=new JButton("PREVIOUS RECORD");
+
+		btn_first.addActionListener(this);
+		btn_previous.addActionListener(this);
+		btn_next.addActionListener(this);
+		btn_last.addActionListener(this);
+		btn_add.addActionListener(this);
+		btn_edit.addActionListener(this);
+		btn_save.addActionListener(this);
+		btn_delete.addActionListener(this);
+		btn_view.addActionListener(this);
+		btn_cancel.addActionListener(this);
+		btn_nextRecord.addActionListener(this);
+		btn_previousRecord.addActionListener(this);
+		
+		l1=new JLabel("Professional Id");
+		l5=new JLabel("First Name");
+		l6=new JLabel("Middle Name");
+		l7=new JLabel("Last Name");
+		l8=new JLabel("Father's First Name");
+		l9=new JLabel("Father's Middle Name");
+		l10=new JLabel("Father's Last Name");
+		l11=new JLabel("Address");
+		l12=new JLabel("Mobile");
+		l13=new JLabel("Email");
+		l14=new JLabel("Date Of Birth");
+		l15=new JLabel("PAN");
+		l16=new JLabel("Expected Salary");
+		lbl_empty1=new JLabel("");
+		lbl_empty2=new JLabel("");
+
+		
+		lbl_heading=new JLabel("Professional Personal Record");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+			
+		
+		p1.setLayout(new GridLayout(15,2,5,5));
+		p2.setLayout(new GridLayout(1,4,5,5));
+		p3.setLayout(new GridLayout(15,1,5,5));
+		panel_heading.setLayout(new GridLayout(4,1));
+		
+		panel_heading.add(lbl_empty1);
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lbl_empty2);
+		panel_heading.add(lblMessage);
+		
+		
+		p1.add(l1);
+		p1.add(tf_proId);
+		p1.add(l5);
+		p1.add(tf_FName);
+		p1.add(l6);
+		p1.add(tf_MName);
+		p1.add(l7);
+		p1.add(tf_LName);
+		p1.add(l8);
+		p1.add(tf_FFName);
+		p1.add(l9);
+		p1.add(tf_FMName);
+		p1.add(l10);
+		p1.add(tf_FLName);
+		p1.add(l11);
+		p1.add(tf_address);
+		p1.add(l12);
+		p1.add(tf_mobile);
+		p1.add(l13);
+		p1.add(tf_email);
+		p1.add(l14);
+		p1.add(tf_dob);
+		p1.add(l15);
+		p1.add(tf_pan);
+		p1.add(l16);
+		p1.add(tf_expectedSalary);
+
+		p2.add(btn_first);
+		p2.add(btn_previous);
+		p2.add(btn_next);
+		p2.add(btn_last);
+		
+		p3.add(btn_nextRecord);
+		p3.add(btn_previousRecord);
+		if(MainFrame.userStatus.equalsIgnoreCase("operator")){
+			p3.add(btn_add);
+		}
+		p3.add(btn_edit);
+		p3.add(btn_save);
+		p3.add(btn_delete);
+
+		p3.add(btn_view);
+		p3.add(btn_cancel);
+
+		
+		add(panel_heading,BorderLayout.NORTH);
+		add(p1,BorderLayout.CENTER);
+		add(p2,BorderLayout.SOUTH);
+		add(p3,BorderLayout.EAST);
+
+
+		setVisible(true);
+		if(type.equals("navigate")){
+			this.count=count;
+		}
+
+		MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+		
+		if(MainFrame.staticArraylist.size()>0){
+			ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+			ProfessionalPersonalBean pro_obj=pro_container.getPersonalDetail();
+			showRecords(pro_obj);
+		}
+
+		
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==btn_add){
+			clear();
+			btn_save.setEnabled(true);
+			editSaveFlag="save";
+
+		}
+
+		if(ae.getSource()==btn_edit){
+			editSaveFlag="edit";
+			lblMessage.setText("");
+			btn_save.setEnabled(true);
+		}
+
+		if(ae.getSource()==btn_save){
+
+			int flag=0;
+			try{	
+				Double salary=Double.parseDouble(tf_expectedSalary.getText());
+			}
+			catch(NumberFormatException e){
+				lblMessage.setText("Enter number for  expected salary");
+				flag=1;
+			}
+			if(tf_pan.getText().equals("")){
+				lblMessage.setText("Enter professional PAN");								
+				flag=1;				
+			}
+			try{
+				String dob= tf_dob.getText();
+				Date dd= new Date(200);
+	 			dd=Date.valueOf(dob);
+			}
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("Date Format is (yyyy-mm-dd) ");
+				flag=1;	
+		  	}
+
+			try{
+				Long mobile=Long.parseLong(tf_mobile.getText());
+			}
+			catch(NumberFormatException e)
+ 			{
+				lblMessage.setText("Enter number for mobile number");
+				flag=1;
+	           		}
+
+			if(tf_FName.getText().equals("")){
+				lblMessage.setText("Enter professional's first name");
+				flag=1;
+			}
+			else if(tf_LName.getText().equals("")){
+				lblMessage.setText("Enter professional's last name");
+				flag=1;
+			}
+			else if(tf_FFName.getText().equals("")){
+				lblMessage.setText("Enter professional father's first name");				
+				flag=1;
+			}
+			else if(tf_FLName.getText().equals("")){
+				lblMessage.setText("Enter professional father's last name");								
+				flag=1;
+			}
+			else if(tf_address.getText().equals("")){
+				lblMessage.setText("Enter professional's address");								
+				flag=1;
+			}
+
+						
+			if(editSaveFlag.equals("save") && flag==0){
+					String result=db_obj.saveProfessionalDetails(tf_FName.getText(),tf_MName.getText(),tf_LName.getText(),tf_FFName.getText(),tf_FMName.getText(),tf_FLName.getText(),tf_address.getText(),tf_mobile.getText(),tf_email.getText(),tf_dob.getText(),tf_pan.getText(),Double.parseDouble(tf_expectedSalary.getText()));
+					
+					if(result.equals("failed")){
+						lblMessage.setText("Record not saved");					
+					}
+					else if(result.equals("saved")){
+							lblMessage.setText("Record added successfully");
+							MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+							count=0;
+							if(MainFrame.staticArraylist.size()>0){
+							ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+							ProfessionalPersonalBean pro_obj=pro_container.getPersonalDetail();
+								showRecords(pro_obj);
+							}
+							
+							btn_save.setEnabled(false);
+					}
+				}
+			if(editSaveFlag.equals("edit") && flag==0){
+					String result=db_obj.updateProPersonalDetails(Integer.parseInt(tf_proId.getText()),tf_FName.getText(),tf_MName.getText(),tf_LName.getText(),tf_FFName.getText(),tf_FMName.getText(),tf_FLName.getText(),tf_address.getText(),tf_mobile.getText(),tf_email.getText(),tf_dob.getText(),tf_pan.getText(),Double.parseDouble(tf_expectedSalary.getText()));
+					if(result.equals("updated")){
+						lblMessage.setText("Record updated sucessfully");
+						MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+						if(MainFrame.staticArraylist.size()>0){
+							ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+							ProfessionalPersonalBean pro_obj=pro_container.getPersonalDetail();
+							showRecords(pro_obj);
+							btn_save.setEnabled(false);
+						}
+						lblMessage.setText("Record updated sucessfully");
+					}
+					else{
+						lblMessage.setText("Record not updated");
+						
+					}
+				}
+		}
+
+		if(ae.getSource()==btn_first){
+			count=0;
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ProfessionalPersonalBean pro_obj=pro_container.getPersonalDetail();
+				showRecords(pro_obj);
+			}
+		}
+
+		if(ae.getSource()==btn_previous){
+			if(count==0)
+			{
+			}
+			else
+			{
+				count--;
+			}	
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ProfessionalPersonalBean pro_obj=pro_container.getPersonalDetail();
+				showRecords(pro_obj);
+			}
+		}
+		
+		if(ae.getSource()==btn_next){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				if(count==(MainFrame.staticArraylist.size()-1))
+				{}
+				else
+				{
+					count++;
+				}
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ProfessionalPersonalBean pro_obj=pro_container.getPersonalDetail();
+				showRecords(pro_obj);
+			}			
+		}
+		
+		if(ae.getSource()==btn_last){
+			count=MainFrame.staticArraylist.size()-1;
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ProfessionalPersonalBean pro_obj=pro_container.getPersonalDetail();
+				showRecords(pro_obj);
+			}
+		}
+
+		if(ae.getSource()==btn_cancel){	
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+		}
+		if(ae.getSource()==btn_view){
+			ReportProPersonalDetails obj=new ReportProPersonalDetails();	
+		}
+
+		if(ae.getSource()==btn_nextRecord){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageProQualification(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+
+		}
+		if(ae.getSource()==btn_previousRecord){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageProProjects(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+
+		if(ae.getSource()==btn_delete){
+			String result=db_obj.deleteProfessional(Integer.parseInt(tf_proId.getText()));
+			MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+			if(result.equals("deleted")){
+				count=0;
+				if(MainFrame.staticArraylist.size()>0)
+				{
+					ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+					ProfessionalPersonalBean pro_obj=pro_container.getPersonalDetail();
+					showRecords(pro_obj);
+				}
+			}
+			else{	
+				lblMessage.setText("Unable to delete");				
+			}
+		}		
+
+
+	}
+	
+	public void clear(){
+		tf_proId.setText("");
+		tf_FName.setText("");
+		tf_MName.setText("");
+		tf_LName.setText("");
+		tf_FFName.setText("");
+		tf_FMName.setText("");
+		tf_FLName.setText("");
+		tf_address.setText("");
+		tf_mobile.setText("");
+		tf_email.setText("");
+		tf_dob.setText("");
+		tf_pan.setText("");
+		tf_expectedSalary.setText("");
+	}
+
+	public void showRecords(ProfessionalPersonalBean pro_obj){
+		tf_proId.setText(String.valueOf(pro_obj.getProfId()));
+		tf_FName.setText(pro_obj.getProfFName());
+		tf_MName.setText(pro_obj.getProfMName());
+		tf_LName.setText(pro_obj.getProfLName());
+		tf_FFName.setText(pro_obj.getProfFFName());
+		tf_FMName.setText(pro_obj.getProfFMName());
+		tf_FLName.setText(pro_obj.getProfFLName());
+		tf_address.setText(pro_obj.getProfAddress());
+		tf_mobile.setText(pro_obj.getProfMobile());
+		tf_email.setText(pro_obj.getProfEmail());
+		tf_dob.setText(pro_obj.getProfDOB());
+		tf_pan.setText(pro_obj.getProfPAN());
+		tf_expectedSalary.setText(String.valueOf(pro_obj. getProfExpectedSalary()));
+		lblMessage.setText("");
+		btn_save.setEnabled(false);
+		editSaveFlag="";
+	}
+
+	
+}import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.sql.Date;
+public class ManageProProjects extends JPanel implements ActionListener
+{
+	JPanel panalCenter,panalSouth,panalEast,panel_heading;
+	JTextField tf_proId,tf_projectId,tf_projectName,tf_startDate,tf_endDate,tf_technologiesUsed,tf_projectDescription;
+	JTextField tf_experienceId;
+	JButton btn_first,btn_previous,btn_next,btn_last,btn_save,btn_view,btn_cancel,btn_add,btn_edit,btn_delete;
+	JButton btn_nextRecord,btn_previousRecord;  //to navigate between professionals varius details	
+	JButton btn_addProject;
+	JLabel lbl_projectId,lblProfId,lbl_experienceId,lbl_projectName,lbl_startDate,lbl_endDate,lbl_technologiesUsed,lbl_projectDescription,lbl_jobProfile,lbl_heading,lblMessage,lbl_salaryPackage;
+	JLabel lbl_empty1,lbl_empty2,lbl_empty3,lbl_empty4,lbl_empty5,lbl_empty6;
+
+	prtsDb db_obj=new prtsDb();
+	int count=0;
+	int localCount=0;
+	String editSaveFlag="none";
+	
+	public ManageProProjects(int count,String type)
+	{
+
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		panalCenter=new JPanel();
+		panalSouth=new JPanel();
+		panalEast=new JPanel();
+		panel_heading=new JPanel();
+
+		tf_projectId=new JTextField(10);
+		tf_projectId.setEditable(false);
+
+		tf_experienceId=new JTextField(10);
+		tf_experienceId.setEditable(false);
+
+		tf_proId=new JTextField(10);
+		tf_proId.setEditable(false);
+
+		tf_projectName=new JTextField(10);
+		tf_startDate=new JTextField(10);		
+		tf_endDate=new JTextField(10);
+		tf_technologiesUsed=new JTextField(10);
+		tf_projectDescription=new JTextField(10);
+
+
+		lbl_projectId=new JLabel("Project Id");		
+		lbl_experienceId=new JLabel("Experience Id");
+		lblProfId=new JLabel("Professional Id");
+		lbl_projectName=new JLabel("Project Name");
+		lbl_startDate=new JLabel("Start Date");
+		lbl_endDate=new JLabel("End Date");
+		lbl_technologiesUsed=new JLabel("Technologies Used");
+		lbl_projectDescription=new JLabel("Project Description");
+
+
+		lbl_empty1=new JLabel("");
+		lbl_empty2=new JLabel("");
+
+
+		lbl_heading=new JLabel("Professional Project Record");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+		
+
+
+		btn_first=new JButton("FIRST");
+		btn_previous=new JButton("PREVIOUS");
+		btn_next=new JButton("NEXT ");
+		btn_last=new JButton("LAST");
+
+		btn_nextRecord=new JButton("NEXT RECORD");
+		btn_previousRecord=new JButton("PREVIOUS RECORD");
+		btn_addProject=new JButton("ADD PROJECT");
+		btn_add=new JButton("ADD PROJECT");
+		btn_edit=new JButton("EDIT");
+		btn_save=new JButton("SAVE");
+		btn_save.setEnabled(false);
+		btn_delete=new JButton("DELETE");
+		btn_view=new JButton("VIEW ALL");
+		btn_cancel=new JButton("CANCEL");
+	
+
+
+		btn_first.addActionListener(this);
+		btn_previous.addActionListener(this);
+		btn_next.addActionListener(this);
+		btn_last.addActionListener(this);
+
+		btn_nextRecord.addActionListener(this);
+		btn_previousRecord.addActionListener(this);
+		btn_addProject.addActionListener(this);
+		btn_add.addActionListener(this);
+		btn_edit.addActionListener(this);
+		btn_save.addActionListener(this);
+		btn_delete.addActionListener(this);
+		btn_view.addActionListener(this);
+		btn_cancel.addActionListener(this);
+
+		
+		
+		panalCenter.setLayout(new GridLayout(15,2,10,5));
+		panalSouth.setLayout(new GridLayout(1,4,5,5));
+		panalEast.setLayout(new GridLayout(15,1,5,7));
+		panel_heading.setLayout(new GridLayout(4,1));
+		
+		panel_heading.add(lbl_empty1);
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lbl_empty2);
+		panel_heading.add(lblMessage);
+
+		panalCenter.add(lbl_projectId);
+		panalCenter.add(tf_projectId);		
+		panalCenter.add(lblProfId);
+		panalCenter.add(tf_proId);
+		panalCenter.add(lbl_experienceId);
+		panalCenter.add(tf_experienceId);		
+		panalCenter.add(lbl_projectName);
+		panalCenter.add(tf_projectName);
+		panalCenter.add(lbl_startDate);
+		panalCenter.add(tf_startDate);
+		panalCenter.add(lbl_endDate);
+		panalCenter.add(tf_endDate);
+		panalCenter.add(lbl_technologiesUsed);
+		panalCenter.add(tf_technologiesUsed);
+		panalCenter.add(lbl_projectDescription);
+		panalCenter.add(tf_projectDescription);
+	
+	
+
+
+		panalSouth.add(btn_first);
+		panalSouth.add(btn_previous);
+		panalSouth.add(btn_next);
+		panalSouth.add(btn_last);
+		
+		panalEast.add(btn_nextRecord);
+		panalEast.add(btn_previousRecord);
+		//panalEast.add(btn_addProject);
+		if(MainFrame.userStatus.equalsIgnoreCase("operator")){
+			panalEast.add(btn_add);
+		}
+		panalEast.add(btn_edit);
+		panalEast.add(btn_save);
+		panalEast.add(btn_delete);
+
+		panalEast.add(btn_view);
+		panalEast.add(btn_cancel);
+
+		
+		add(panel_heading,BorderLayout.NORTH);
+		add(panalCenter,BorderLayout.CENTER);
+		add(panalSouth,BorderLayout.SOUTH);
+		add(panalEast,BorderLayout.EAST);
+
+
+		setVisible(true);
+		if(type.equals("navigate")){
+			this.count=count;
+		}
+
+		MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+		
+		if(MainFrame.staticArraylist.size()>0){
+			ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+			ArrayList al_project=pro_container.getProject();
+			if(al_project.size()>0){
+				ProjectDetailsBean pro_obj=(ProjectDetailsBean)al_project.get(localCount);
+				showRecords(pro_obj);
+			}
+		}
+		
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==btn_add){
+			clear();
+			btn_save.setEnabled(true);
+			editSaveFlag="save";
+
+		}
+
+		if(ae.getSource()==btn_edit){
+			editSaveFlag="edit";
+			lblMessage.setText("");
+			btn_save.setEnabled(true);
+		}
+
+		if(ae.getSource()==btn_save){
+		
+			int flag=0;
+		
+			if(tf_projectDescription.getText().equals("")){
+				lblMessage.setText("Enter project description");
+				flag=1;
+			}
+
+			if(tf_technologiesUsed.getText().equals("")){
+				lblMessage.setText("Enter technologies used");
+				flag=1;
+			}
+		
+			try{
+				String end= tf_endDate.getText();
+         				Date dd= new Date(200);
+		 		dd=Date.valueOf(end);
+			}
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("End Date Format is (yyyy-mm-dd) ");
+				flag=1;	
+		  	}
+
+			try{
+				String start= tf_startDate.getText();
+         				Date dd= new Date(200);
+		 		dd=Date.valueOf(start);
+			}
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("Start Date Format is (yyyy-mm-dd) ");
+				flag=1;	
+		  	}
+
+			if(tf_projectName.getText().equals("")){
+				lblMessage.setText("Enter project name");
+				flag=1;
+			}
+	
+									
+			if(editSaveFlag.equals("save") && flag==0){
+					String result=db_obj.saveProProjectDetails(Integer.parseInt(tf_proId.getText()),tf_projectName.getText(),tf_projectDescription.getText(),tf_startDate.getText(),tf_endDate.getText(),tf_technologiesUsed.getText(),Integer.parseInt(tf_experienceId.getText()));
+					
+					if(result.equals("failed")){
+						lblMessage.setText("Record not saved");					
+					}
+					else if(result.equals("saved")){
+							lblMessage.setText("Record added successfully");
+							MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+							localCount=0;
+							if(MainFrame.staticArraylist.size()>0){
+								ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+								ArrayList al_project=pro_container.getProject();
+								if(al_project.size()>0){
+									ProjectDetailsBean pro_obj=(ProjectDetailsBean)al_project.get(localCount);
+									showRecords(pro_obj);
+								}
+							}
+							btn_save.setEnabled(false);
+					}
+			}
+			if(editSaveFlag.equals("edit") && flag==0){
+					String result=db_obj.updateProProjectDetails(Integer.parseInt(tf_projectId.getText()),tf_projectName.getText(),tf_projectDescription.getText(),tf_startDate.getText(),tf_endDate.getText(),tf_technologiesUsed.getText(),Integer.parseInt(tf_experienceId.getText()));
+					if(result.equals("updated")){
+						MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+						if(MainFrame.staticArraylist.size()>0){
+							ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+							ArrayList al_project=pro_container.getProject();
+							if(al_project.size()>0){
+								ProjectDetailsBean pro_obj=(ProjectDetailsBean)al_project.get(localCount);
+								showRecords(pro_obj);
+							}
+						}
+						btn_save.setEnabled(false);						
+						lblMessage.setText("Record updated sucessfully");						
+					}
+					else{
+						lblMessage.setText("Record not updated");
+						
+					}
+		
+			}
+			
+		}
+
+		if(ae.getSource()==btn_first){
+			if(MainFrame.staticArraylist.size()>0){
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_project=pro_container.getProject();
+				if(al_project.size()>0){
+					localCount=0;
+					ProjectDetailsBean pro_obj=(ProjectDetailsBean)al_project.get(localCount);
+					showRecords(pro_obj);
+				}
+			}
+		}
+
+		if(ae.getSource()==btn_previous){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_project=pro_container.getProject();
+				if(al_project.size()>0){	
+					if(localCount==0)
+					{}
+					else
+					{
+						localCount--;
+					}
+						ProjectDetailsBean pro_obj=(ProjectDetailsBean)al_project.get(localCount);
+						showRecords(pro_obj);
+				}
+			}
+		}
+		
+		if(ae.getSource()==btn_next){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_project=pro_container.getProject();
+				if(al_project.size()>0){	
+					if(localCount==(al_project.size()-1))
+					{}
+					else
+					{
+						localCount++;
+					}
+						ProjectDetailsBean pro_obj=(ProjectDetailsBean)al_project.get(localCount);
+						showRecords(pro_obj);
+				}
+			}			
+		}
+		
+		if(ae.getSource()==btn_last){
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_project=pro_container.getProject();
+				if(al_project.size()>0){
+					localCount=al_project.size()-1;
+					ProjectDetailsBean pro_obj=(ProjectDetailsBean)al_project.get(localCount);
+					showRecords(pro_obj);
+				}
+		}
+
+		if(ae.getSource()==btn_cancel){	
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+		}
+		if(ae.getSource()==btn_view){
+			if(MainFrame.staticArraylist.size()>0){
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_project=pro_container.getProject();
+				ReportProfessionalProjects obj=new ReportProfessionalProjects(al_project);
+			}
+			else{
+				JOptionPane.showMessageDialog(this,"There are no records to display","",JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+
+		if(ae.getSource()==btn_nextRecord){
+		
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageProPersonal(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+		if(ae.getSource()==btn_previousRecord){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageProExperience(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+
+		if(ae.getSource()==btn_delete){
+			String result=db_obj.deleteProfessionalProject(Integer.parseInt(tf_projectId.getText()));
+			if(result.equals("deleted")){
+				MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+				if(MainFrame.staticArraylist.size()>0){
+					ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+					ArrayList al_project=pro_container.getProject();
+					if(al_project.size()>0){
+						localCount=0;
+						ProjectDetailsBean pro_obj=(ProjectDetailsBean)al_project.get(localCount);
+						showRecords(pro_obj);
+					}
+				}
+			}
+			else{
+				lblMessage.setText("Unable to delete");
+			}
+		}
+		
+
+
+	}
+	
+	public void clear(){
+		tf_projectId.setText("");
+		//tf_proId.setText("");
+		//tf_experienceId.setText("");
+		tf_projectName.setText("");
+		tf_startDate.setText("");
+		tf_endDate.setText("");
+		tf_technologiesUsed.setText("");
+		tf_projectDescription.setText("");
+
+	}
+
+	public void showRecords(ProjectDetailsBean pro_obj){
+		tf_projectId.setText(String.valueOf(pro_obj.getProjectId()));
+		tf_proId.setText(String.valueOf(pro_obj.getProfId()));
+		tf_experienceId.setText(String.valueOf(pro_obj.getExperienceId()));
+		tf_projectName.setText(pro_obj.getProjectName());
+		tf_startDate.setText(pro_obj.getProjectStartDate());
+		tf_endDate.setText(pro_obj.getProjectEndDate());
+		tf_technologiesUsed.setText(pro_obj.getTechnologiesLanguages());
+		tf_projectDescription.setText(pro_obj.getProjectDescription());
+
+
+		lblMessage.setText("");
+		btn_save.setEnabled(false);
+		editSaveFlag="";
+	}
+
+	
+}import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.sql.Date;
+public class ManageProQualification extends JPanel implements ActionListener
+{
+	JPanel panalCenter,panalSouth,panalEast,panel_heading;
+	JTextField tf_proId,tf_qname,tf_branch,tf_yop,tf_uniBoard,tf_coll_Institute,tf_perMarks;
+	JTextField tf_qId;
+	JButton btn_first,btn_previous,btn_next,btn_last,btn_save,btn_view,btn_cancel,btn_add,btn_edit,btn_delete;
+	JButton btn_nextRecord,btn_previousRecord;  //to navigate between professionals varius details	
+	JLabel lblProfId,lbl_qId,lbl_qname,lbl_branch,lbl_yop,lbl_uniBoard,lbl_coll_Institute,lbl_perMarks,lbl_heading,lblMessage;
+	JLabel lbl_empty1,lbl_empty2;
+
+	prtsDb db_obj=new prtsDb();
+	int count=0; //user to traverse between various professional detail categories 
+	int localCount=0; // to traverse between qualifications
+	String editSaveFlag="none";
+	
+	public ManageProQualification(int count,String type)
+	{
+
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		panalCenter=new JPanel();
+		panalSouth=new JPanel();
+		panalEast=new JPanel();
+		panel_heading=new JPanel();
+
+		tf_proId=new JTextField(10);
+		tf_proId.setEditable(false);
+		tf_qId=new JTextField(10);
+		tf_qId.setEditable(false);
+		tf_qname=new JTextField(10);
+		tf_branch=new JTextField(10);		
+		tf_yop=new JTextField(10);
+		tf_uniBoard=new JTextField(10);
+		tf_coll_Institute=new JTextField(10);
+		tf_perMarks=new JTextField(10);
+		
+
+
+		btn_first=new JButton("FIRST");
+		btn_previous=new JButton("PREVIOUS");
+		btn_next=new JButton("NEXT ");
+		btn_last=new JButton("LAST");
+
+		btn_add=new JButton("ADD QUALIFICATION");
+		btn_edit=new JButton("EDIT");
+		btn_save=new JButton("SAVE");
+		btn_save.setEnabled(false);
+		btn_delete=new JButton("DELETE");
+		btn_view=new JButton("VIEW ALL");
+		btn_cancel=new JButton("CANCEL");	
+	
+		btn_nextRecord=new JButton("NEXT RECORD");
+		btn_previousRecord=new JButton("PREVIOUS RECORD");
+
+		btn_first.addActionListener(this);
+		btn_previous.addActionListener(this);
+		btn_next.addActionListener(this);
+		btn_last.addActionListener(this);
+		btn_add.addActionListener(this);
+		btn_edit.addActionListener(this);
+		btn_save.addActionListener(this);
+		btn_delete.addActionListener(this);
+		btn_view.addActionListener(this);
+		btn_cancel.addActionListener(this);
+		btn_nextRecord.addActionListener(this);
+		btn_previousRecord.addActionListener(this);
+		
+		lblProfId=new JLabel("Professional Id");
+		lbl_qId=new JLabel("Qualification Id");
+		lbl_qname=new JLabel("Qualification Name");
+		lbl_branch=new JLabel("Branch");
+		lbl_yop=new JLabel("Year Of Passing");
+		lbl_uniBoard=new JLabel("University / Board");
+		lbl_coll_Institute=new JLabel("College / Institute");
+		lbl_perMarks=new JLabel("Percentage Marks");
+
+		lbl_empty1=new JLabel("");
+		lbl_empty2=new JLabel("");
+
+
+		lbl_heading=new JLabel("Professional Qualification Record");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+			
+		
+		panalCenter.setLayout(new GridLayout(15,2,5,5));
+		panalSouth.setLayout(new GridLayout(1,4,5,5));
+		panalEast.setLayout(new GridLayout(15,1,5,5));
+		panel_heading.setLayout(new GridLayout(4,1));
+		
+		panel_heading.add(lbl_empty1);
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lbl_empty2);
+		panel_heading.add(lblMessage);
+		
+		
+		panalCenter.add(lbl_qId);
+		panalCenter.add(tf_qId);
+		panalCenter.add(lblProfId);
+		panalCenter.add(tf_proId);
+		panalCenter.add(lbl_qname);
+		panalCenter.add(tf_qname);
+		panalCenter.add(lbl_branch);
+		panalCenter.add(tf_branch);
+		panalCenter.add(lbl_yop);
+		panalCenter.add(tf_yop);
+		panalCenter.add(lbl_uniBoard);
+		panalCenter.add(tf_uniBoard);
+		panalCenter.add(lbl_coll_Institute);
+		panalCenter.add(tf_coll_Institute);
+		panalCenter.add(lbl_perMarks);
+		panalCenter.add(tf_perMarks);
+
+
+		panalSouth.add(btn_first);
+		panalSouth.add(btn_previous);
+		panalSouth.add(btn_next);
+		panalSouth.add(btn_last);
+		
+		panalEast.add(btn_nextRecord);
+		panalEast.add(btn_previousRecord);
+		if(MainFrame.userStatus.equalsIgnoreCase("operator")){
+			panalEast.add(btn_add);
+		}
+		panalEast.add(btn_edit);
+		panalEast.add(btn_save);
+		panalEast.add(btn_delete);
+
+		panalEast.add(btn_view);
+		panalEast.add(btn_cancel);
+
+		
+		add(panel_heading,BorderLayout.NORTH);
+		add(panalCenter,BorderLayout.CENTER);
+		add(panalSouth,BorderLayout.SOUTH);
+		add(panalEast,BorderLayout.EAST);
+
+
+		setVisible(true);
+		if(type.equals("navigate")){
+			this.count=count;
+		}
+
+
+		MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+		
+		if(MainFrame.staticArraylist.size()>0){
+			ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+			ArrayList al_qualification=pro_container.getQualification();
+			if(al_qualification.size()>0){
+				ProfessionalQualificationBean pro_obj=(ProfessionalQualificationBean)al_qualification.get(localCount);
+				showRecords(pro_obj);
+			}
+		}
+		
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==btn_add){
+			clear();
+			btn_save.setEnabled(true);
+			editSaveFlag="save";
+
+		}
+
+		if(ae.getSource()==btn_edit){
+			editSaveFlag="edit";
+			lblMessage.setText("");
+			btn_save.setEnabled(true);
+		}
+
+		if(ae.getSource()==btn_save){
+
+			int flag=0;
+			try{	
+				Double per=Double.parseDouble(tf_perMarks.getText());
+				if(per>100){
+					lblMessage.setText("Enter correct percentage marks");
+					flag=1;		
+				}
+			}
+			catch(NumberFormatException e){
+				lblMessage.setText("Enter number for  percentage marks");
+				flag=1;
+			}
+			if(tf_coll_Institute.getText().equals("")){
+				lblMessage.setText("Enter college/Institute name ");								
+				flag=1;				
+			}
+			if(tf_uniBoard.getText().equals("")){
+				lblMessage.setText("Enter University/Board name");								
+				flag=1;				
+			}
+
+			try{
+				String yop= tf_yop.getText();
+         				Date dd= new Date(200);
+		 		dd=Date.valueOf(yop);
+			}
+
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("Date Format is (yyyy-mm-dd) ");
+				flag=1;	
+		  	}
+			if(tf_branch.getText().equals("")){
+				lblMessage.setText("Enter branch name");								
+				flag=1;				
+			}
+			if(tf_qname.getText().equals("")){
+				lblMessage.setText("Enter Qualification name");								
+				flag=1;				
+			}
+			try{
+				int pid= Integer.parseInt(tf_proId.getText());
+			}
+
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("Enter number for professional id");
+				flag=1;	
+		  	}
+			/*try{
+				int qid= Integer.parseInt(tf_qId.getText());
+			}
+
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("Enter number for qualification id");
+				flag=1;	
+		  	}*/
+			
+									
+			if(editSaveFlag.equals("save") && flag==0){
+					String result=db_obj.saveProQualificationDetails(Integer.parseInt(tf_proId.getText()),tf_qname.getText(),tf_branch.getText(),tf_yop.getText(),tf_uniBoard.getText(),tf_coll_Institute.getText(),Double.parseDouble(tf_perMarks.getText()));
+					
+					if(result.equals("failed")){
+						lblMessage.setText("Record not saved");					
+					}
+					else if(result.equals("saved")){
+							lblMessage.setText("Record added successfully");
+							MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+							localCount=0;
+							if(MainFrame.staticArraylist.size()>0){
+								ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+								ArrayList al_qualification=pro_container.getQualification();
+								if(al_qualification.size()>0){
+									ProfessionalQualificationBean pro_obj=(ProfessionalQualificationBean)al_qualification.get(localCount);
+									showRecords(pro_obj);
+								}
+							}
+							btn_save.setEnabled(false);
+					}
+			}
+			if(editSaveFlag.equals("edit") && flag==0){
+					String result=db_obj.updateProQualificationDetails(Integer.parseInt(tf_qId.getText()),Integer.parseInt(tf_proId.getText()),tf_qname.getText(),tf_branch.getText(),tf_yop.getText(),tf_uniBoard.getText(),tf_coll_Institute.getText(),Double.parseDouble(tf_perMarks.getText()));
+					if(result.equals("updated")){
+						MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+						if(MainFrame.staticArraylist.size()>0){
+							ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+							ArrayList al_qualification=pro_container.getQualification();
+							if(al_qualification.size()>0){
+								ProfessionalQualificationBean pro_obj=(ProfessionalQualificationBean)al_qualification.get(localCount);
+								showRecords(pro_obj);
+							}
+						}
+						btn_save.setEnabled(false);						
+						lblMessage.setText("Record updated sucessfully");						
+					}
+					else{
+						lblMessage.setText("Record not updated");
+						
+					}
+			}
+		}
+
+		if(ae.getSource()==btn_first){
+			if(MainFrame.staticArraylist.size()>0){
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_qualification=pro_container.getQualification();
+				if(al_qualification.size()>0){
+					localCount=0;
+					ProfessionalQualificationBean pro_obj=(ProfessionalQualificationBean)al_qualification.get(localCount);
+					showRecords(pro_obj);
+				}
+			}
+		}
+
+		if(ae.getSource()==btn_previous){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_qualification=pro_container.getQualification();
+				if(al_qualification.size()>0){	
+					if(localCount==0)
+					{}
+					else
+					{
+						localCount--;
+					}
+						ProfessionalQualificationBean pro_obj=(ProfessionalQualificationBean)al_qualification.get(localCount);
+						showRecords(pro_obj);
+				}
+			}
+		}
+		
+		if(ae.getSource()==btn_next){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_qualification=pro_container.getQualification();
+				if(al_qualification.size()>0){	
+					if(localCount==(al_qualification.size()-1))
+					{}
+					else
+					{
+						localCount++;
+					}
+						ProfessionalQualificationBean pro_obj=(ProfessionalQualificationBean)al_qualification.get(localCount);
+						showRecords(pro_obj);
+				}
+			}			
+		}
+		
+		if(ae.getSource()==btn_last){
+			
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_qualification=pro_container.getQualification();
+				if(al_qualification.size()>0){
+					localCount=al_qualification.size()-1;
+					ProfessionalQualificationBean pro_obj=(ProfessionalQualificationBean)al_qualification.get(localCount);
+					showRecords(pro_obj);
+				}
+			}
+		}
+
+		if(ae.getSource()==btn_cancel){	
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+		}
+		if(ae.getSource()==btn_view){
+			if(MainFrame.staticArraylist.size()>0){
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ArrayList al_qualification=pro_container.getQualification();
+				ReportProfessionalQualification obj=new ReportProfessionalQualification(al_qualification);
+			}
+			else{
+				JOptionPane.showMessageDialog(this,"There are no records to display","",JOptionPane.INFORMATION_MESSAGE);
+			}
+		
+		}
+
+		if(ae.getSource()==btn_nextRecord){
+			
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageProSkillSet(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+		if(ae.getSource()==btn_previousRecord){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageProPersonal(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+
+		if(ae.getSource()==btn_delete){
+			String result=db_obj.deleteProfessionalQualification(Integer.parseInt(tf_qId.getText()));
+			if(result.equals("deleted")){
+				MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+				if(MainFrame.staticArraylist.size()>0){
+					ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+					ArrayList al_qualification=pro_container.getQualification();
+					if(al_qualification.size()>0){
+						localCount=0;
+						ProfessionalQualificationBean pro_obj=(ProfessionalQualificationBean)al_qualification.get(localCount);
+						showRecords(pro_obj);
+					}
+				}
+			}
+			else{
+				lblMessage.setText("Unable to delete");
+			}
+		}
+		
+	}
+	
+	public void clear(){
+		//tf_proId.setText("");
+		tf_qId.setText("");
+		tf_qname.setText("");
+		tf_branch.setText("");
+		tf_yop.setText("");
+		tf_uniBoard.setText("");
+		tf_coll_Institute.setText("");
+		tf_perMarks.setText("");
+	}
+
+	public void showRecords(ProfessionalQualificationBean pro_obj){
+		tf_proId.setText(String.valueOf(pro_obj.getProfId()));
+		tf_qId.setText(String.valueOf(pro_obj.getQualificationId()));
+		tf_qname.setText(pro_obj.getQualificationName());
+		tf_branch.setText(pro_obj.getBranch());
+		tf_yop.setText(pro_obj.getYearOfPassing());
+		tf_uniBoard.setText(pro_obj.getUniversityBoard());
+		tf_coll_Institute.setText(pro_obj.getCollegeInstitute());
+		tf_perMarks.setText(String.valueOf(pro_obj.getPerMarks()));
+
+		lblMessage.setText("");
+		btn_save.setEnabled(false);
+		editSaveFlag="";
+	}
+
+	
+}import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.sql.Date;
+public class ManageProSkillSet extends JPanel implements ActionListener
+{
+	JPanel panalCenter,panalSouth,panalEast,panel_heading;
+	JTextField tf_proId,tf_os,tf_technologies,tf_scriptLanguages,tf_databases,tf_frameworks,tf_testingTools,tf_otherSkills;
+	JTextField tf_qId;
+	JButton btn_first,btn_previous,btn_next,btn_last,btn_save,btn_view,btn_cancel,btn_add,btn_edit,btn_delete;
+	JButton btn_nextRecord,btn_previousRecord;  //to navigate between professionals varius details	
+	JLabel lblProfId,lbl_qId,lbl_os,lbl_technologies,lbl_scriptLanguages,lbl_databases,lbl_frameworks,lbl_testingTools,lbl_heading,lblMessage,lbl_otherSkills;
+	JLabel lbl_empty1,lbl_empty2,lbl_empty3,lbl_empty4,lbl_empty5,lbl_empty6;
+
+	prtsDb db_obj=new prtsDb();
+	int count=0;
+	String editSaveFlag="none";
+	
+	public ManageProSkillSet(int count,String type)
+	{
+
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		panalCenter=new JPanel();
+		panalSouth=new JPanel();
+		panalEast=new JPanel();
+		panel_heading=new JPanel();
+
+		tf_proId=new JTextField(10);
+		tf_proId.setEditable(false);
+		tf_os=new JTextField(10);
+		tf_technologies=new JTextField(10);		
+		tf_scriptLanguages=new JTextField(10);
+		tf_databases=new JTextField(10);
+		tf_frameworks=new JTextField(10);
+		tf_testingTools=new JTextField(10);
+		tf_otherSkills=new JTextField(10);
+		
+
+		lblProfId=new JLabel("Professional Id");
+		lbl_os=new JLabel("Operating Systems");
+		lbl_technologies=new JLabel("Technologies");
+		lbl_scriptLanguages=new JLabel("Scripting Languages");
+		lbl_databases=new JLabel("Databases");
+		lbl_frameworks=new JLabel("Frameworks");
+		lbl_testingTools=new JLabel("Testing Tools");
+		lbl_otherSkills=new JLabel("Other Skills");
+
+		lbl_empty1=new JLabel("");
+		lbl_empty2=new JLabel("");
+
+
+		lbl_heading=new JLabel("Professional Skill Set Record");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+		
+
+
+		btn_first=new JButton("FIRST");
+		btn_previous=new JButton("PREVIOUS");
+		btn_next=new JButton("NEXT ");
+		btn_last=new JButton("LAST");
+
+		btn_add=new JButton("ADD");
+		btn_edit=new JButton("EDIT");
+		btn_save=new JButton("SAVE");
+		btn_save.setEnabled(false);
+		btn_delete=new JButton("DELETE");
+		btn_view=new JButton("VIEW ALL");
+		btn_cancel=new JButton("CANCEL");	
+	
+		btn_nextRecord=new JButton("NEXT RECORD");
+		btn_previousRecord=new JButton("PREVIOUS RECORD");
+
+		btn_first.addActionListener(this);
+		btn_previous.addActionListener(this);
+		btn_next.addActionListener(this);
+		btn_last.addActionListener(this);
+		btn_add.addActionListener(this);
+		btn_edit.addActionListener(this);
+		btn_save.addActionListener(this);
+		btn_delete.addActionListener(this);
+		btn_view.addActionListener(this);
+		btn_cancel.addActionListener(this);
+		btn_nextRecord.addActionListener(this);
+		btn_previousRecord.addActionListener(this);
+		
+			
+		
+		panalCenter.setLayout(new GridLayout(15,2,5,5));
+		panalSouth.setLayout(new GridLayout(1,4,5,5));
+		panalEast.setLayout(new GridLayout(15,1,5,5));
+		panel_heading.setLayout(new GridLayout(4,1));
+		
+		panel_heading.add(lbl_empty1);
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lbl_empty2);
+		panel_heading.add(lblMessage);
+		
+		
+		panalCenter.add(lblProfId);
+		panalCenter.add(tf_proId);
+		panalCenter.add(lbl_os);
+		panalCenter.add(tf_os);
+		panalCenter.add(lbl_technologies);
+		panalCenter.add(tf_technologies);
+		panalCenter.add(lbl_scriptLanguages);
+		panalCenter.add(tf_scriptLanguages);
+		panalCenter.add(lbl_databases);
+		panalCenter.add(tf_databases);
+		panalCenter.add(lbl_frameworks);
+		panalCenter.add(tf_frameworks);
+		panalCenter.add(lbl_testingTools);
+		panalCenter.add(tf_testingTools);
+		panalCenter.add(lbl_otherSkills);
+		panalCenter.add(tf_otherSkills);
+
+
+		panalSouth.add(btn_first);
+		panalSouth.add(btn_previous);
+		panalSouth.add(btn_next);
+		panalSouth.add(btn_last);
+		
+		panalEast.add(btn_nextRecord);
+		panalEast.add(btn_previousRecord);
+		if(MainFrame.userStatus.equalsIgnoreCase("operator")){
+			panalEast.add(btn_add);
+		}
+		panalEast.add(btn_edit);
+		panalEast.add(btn_save);
+		panalEast.add(btn_delete);
+
+		panalEast.add(btn_view);
+		panalEast.add(btn_cancel);
+
+		
+		add(panel_heading,BorderLayout.NORTH);
+		add(panalCenter,BorderLayout.CENTER);
+		add(panalSouth,BorderLayout.SOUTH);
+		add(panalEast,BorderLayout.EAST);
+
+
+		setVisible(true);
+		if(type.equals("navigate")){
+			this.count=count;
+		}
+
+		MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+		if(MainFrame.staticArraylist.size()>0){
+			ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+			ProfessionalSkillSetBean pro_obj=pro_container.getSkillSet();
+			showRecords(pro_obj);
+		}
+		
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==btn_add){
+			clear();
+			btn_save.setEnabled(true);
+			editSaveFlag="edit";
+			//editSaveFlag="save";
+
+		}
+
+		if(ae.getSource()==btn_edit){
+			editSaveFlag="edit";
+			lblMessage.setText("");
+			btn_save.setEnabled(true);
+		}
+
+		if(ae.getSource()==btn_save){
+
+			int flag=0;
+			
+			if(tf_testingTools.getText().equals("")){
+				lblMessage.setText("Enter testing tools");
+				flag=1;		
+			}
+			if(tf_frameworks.getText().equals("")){
+				lblMessage.setText("Enter frameworks");								
+				flag=1;				
+			}
+			if(tf_databases.getText().equals("")){
+				lblMessage.setText("Enter database");								
+				flag=1;				
+			}
+
+			if(tf_scriptLanguages.getText().equals("")){
+				lblMessage.setText("Enter Scripting Languages");	
+				flag=1;	
+		  	}
+			if(tf_technologies.getText().equals("")){
+				lblMessage.setText("Enter technologies ");	
+				flag=1;				
+			}
+			if(tf_os.getText().equals("")){
+				lblMessage.setText("Enter operating system ");								
+				flag=1;				
+			}
+			try{
+				int pid= Integer.parseInt(tf_proId.getText());
+			}
+			catch(IllegalArgumentException e)
+	 		{
+			  	lblMessage.setText("Enter number for professional id");
+				flag=1;	
+		  	}
+			
+									
+			if(editSaveFlag.equals("save") && flag==0){
+				String result=db_obj.saveProSkillSetDetails(Integer.parseInt(tf_proId.getText()),tf_os.getText(),tf_technologies.getText(),tf_scriptLanguages.getText(),tf_databases.getText(),tf_frameworks.getText(),tf_testingTools.getText(),tf_otherSkills.getText());
+				
+				if(result.equals("failed")){
+					lblMessage.setText("Record not saved");					
+				}
+				else if(result.equals("saved")){
+					lblMessage.setText("Record added successfully");
+					MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+					count=0;
+					if(MainFrame.staticArraylist.size()>0){
+						ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+						ProfessionalSkillSetBean pro_obj=pro_container.getSkillSet();
+						showRecords(pro_obj);
+					}
+					btn_save.setEnabled(false);
+				}
+			}
+			if(editSaveFlag.equals("edit") && flag==0){
+				String result=db_obj.updateProSkillSetDetails(Integer.parseInt(tf_proId.getText()),tf_os.getText(),tf_technologies.getText(),tf_scriptLanguages.getText(),tf_databases.getText(),tf_frameworks.getText(),tf_testingTools.getText(),tf_otherSkills.getText());
+				if(result.equals("updated")){
+					lblMessage.setText("Record updated sucessfully");
+					MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+					if(MainFrame.staticArraylist.size()>0){
+						ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+						ProfessionalSkillSetBean pro_obj=pro_container.getSkillSet();
+						showRecords(pro_obj);
+						btn_save.setEnabled(false);
+					}
+					lblMessage.setText("Record updated sucessfully");
+				}
+				else{
+					lblMessage.setText("Record not updated");
+				}
+			}
+		}
+
+		if(ae.getSource()==btn_first){
+			count=0;
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ProfessionalSkillSetBean pro_obj=pro_container.getSkillSet();
+				showRecords(pro_obj);
+			}
+		}
+
+		if(ae.getSource()==btn_previous){
+			if(count==0)
+			{
+			}
+			else
+			{
+				count--;
+			}	
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ProfessionalSkillSetBean pro_obj=pro_container.getSkillSet();
+				showRecords(pro_obj);
+			}
+		}
+		
+		if(ae.getSource()==btn_next){
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				if(count==(MainFrame.staticArraylist.size()-1))
+				{}
+				else
+				{
+					count++;
+				}
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ProfessionalSkillSetBean pro_obj=pro_container.getSkillSet();
+				showRecords(pro_obj);
+			}			
+		}
+		
+		if(ae.getSource()==btn_last){
+			count=MainFrame.staticArraylist.size()-1;
+			if(MainFrame.staticArraylist.size()>0)
+			{
+				ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ProfessionalSkillSetBean pro_obj=pro_container.getSkillSet();
+				showRecords(pro_obj);
+			}
+		}
+
+		if(ae.getSource()==btn_cancel){	
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+		}
+		if(ae.getSource()==btn_view){
+			ReportProfessionalSkillSet obj=new ReportProfessionalSkillSet();
+		
+		}
+
+		if(ae.getSource()==btn_nextRecord){
+		
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageProExperience(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+		if(ae.getSource()==btn_previousRecord){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {
+       			           
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.add(new ManageProQualification(count,"navigate"));
+				MainFrame.container.setVisible(false);
+				MainFrame.container.setVisible(true);
+		}
+		if(ae.getSource()==btn_delete){
+			String result=db_obj.deleteProfessional(Integer.parseInt(tf_proId.getText()));
+			MainFrame.staticArraylist=db_obj.getProfessionalContainerDetails();
+			if(result.equals("deleted")){
+				count=0;
+				if(MainFrame.staticArraylist.size()>0)
+				{
+					ProfessionalContainerBean pro_container=(ProfessionalContainerBean)MainFrame.staticArraylist.get(count);
+				ProfessionalSkillSetBean pro_obj=pro_container.getSkillSet();
+					showRecords(pro_obj);
+				}
+			}
+			else{	
+				lblMessage.setText("Unable to delete");				
+			}
+		}
+		
+
+
+	}
+	
+	public void clear(){
+		//tf_proId.setText("");
+		tf_os.setText("");
+		tf_technologies.setText("");
+		tf_scriptLanguages.setText("");
+		tf_databases.setText("");
+		tf_frameworks.setText("");
+		tf_testingTools.setText("");
+		tf_otherSkills.setText("");
+	}
+
+	public void showRecords(ProfessionalSkillSetBean pro_obj){
+		tf_proId.setText(String.valueOf(pro_obj.getProfId()));
+		tf_os.setText(pro_obj.getOperatingSystem());
+		tf_technologies.setText(pro_obj.getTechnologies());
+		tf_scriptLanguages.setText(pro_obj.getScriptingLanguages());
+		tf_databases.setText(pro_obj.getDatabases());
+		tf_frameworks.setText(pro_obj.getFrameworks());
+		tf_testingTools.setText(pro_obj.getTestingTools());
+		tf_otherSkills.setText(pro_obj.getOtherSkills());
+
+		lblMessage.setText("");
+		btn_save.setEnabled(false);
+		editSaveFlag="";
+	}
+
+	
+}import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+import com.alpha.prts.prtsDb;
+
+public class prtsLogin extends JFrame implements ActionListener
+{
+	JPanel p1,p2,p3;
+	JLabel l1,l2,l3,lbl_msg;
+	JTextField t1;
+	JPasswordField t2;
+	JButton b1,b2;
+	Container c=null;
+	int loginCount=0; 	
+	prtsDb db_obj;
+	MainFrame main_obj;
+	public void init()
+	{
+		c=this.getContentPane();
+		setBounds(350,300,350,175);
+		c.setLayout(new BorderLayout());
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("PRTS");
+
+		db_obj=new prtsDb();
+
+		p1=new JPanel();
+		p2=new JPanel();
+		p3=new JPanel();
+
+		t1=new JTextField(10);
+		t2=new JPasswordField(10);
+
+		t1.addActionListener(this);
+		t2.addActionListener(this);
+
+		b1=new JButton("Login");
+		b1.addActionListener(this);
+
+		b2=new JButton("Cancel");
+		b2.addActionListener(this);
+
+		l1=new JLabel("  Username");
+		l2=new JLabel("  Password");
+		
+		l3=new JLabel("Enter Login Details");
+		l3.setHorizontalAlignment(SwingConstants.CENTER);
+		l3.setFont(new Font("Tahoma", 1, 15));
+
+		lbl_msg=new JLabel("");
+		lbl_msg.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_msg.setFont(new Font("Tahoma", 1, 11));
+		lbl_msg.setForeground(Color.red);	
+
+		c.setLayout(new BorderLayout(5,5));
+		
+		p1.setLayout(new GridLayout(2,1,5,5));
+		p2.setLayout(new GridLayout(2,2,5,5));
+
+		
+
+		p1.add(l3);
+		p1.add(lbl_msg);
+
+		p2.add(l1);
+		p2.add(t1);
+
+		p2.add(l2);
+		p2.add(t2);
+
+		p3.add(b1);
+		p3.add(b2);
+		c.add(p1,BorderLayout.NORTH);
+		c.add(p2,BorderLayout.CENTER);
+		c.add(p3,BorderLayout.SOUTH);
+		setVisible(true);
+		setResizable(false);	
+		
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==b2)    //cancel button
+		{	
+			System.exit(0);
+		}
+	 
+		if(ae.getSource()==b1 || ae.getSource()==t2 || ae.getSource()==t1)     //login 
+		{
+			if(t1.getText().equals("")){
+				lbl_msg.setText("Enter username");
+			}
+			else if(t2.getText().equals("")){	
+				lbl_msg.setText("Enter password");
+			}
+			
+			else{
+				String status=db_obj.validateUser(t1.getText(),t2.getText());
+				if(status.equals("admin")){
+					System.out.println("Admin login");
+					setVisible(false);
+					main_obj =new MainFrame();
+					main_obj.init(status);
+
+				}
+				else if(status.equals("manager")){
+					System.out.println("Manager login");
+					setVisible(false);
+					main_obj =new MainFrame();
+					main_obj.init(status);	
+				}					
+				else if(status.equals("operator")){
+					System.out.println("operator login");
+					setVisible(false);
+					main_obj =new MainFrame();
+					main_obj.init(status);	
+				}
+				else if(status.equals("invalid")){
+					lbl_msg.setText("Invalid user");
+					loginCount++;
+					if(loginCount>2){
+						lbl_msg.setText("Exit application");
+						b1.setEnabled(false);
+					}
+					
+				}
+			}	
+		
+			
+		}
+		
+		
+	}
+	public static void main(String args[])
+	{
+		prtsLogin obj=new prtsLogin();
+		obj.init();
+	}
+}
+			import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+import java.io.*;
+import com.alpha.prts.prtsDb;
+
+public class prtsLogin1
+{ 				
+	public static void main(String args[])
+	{
+		String username="",password="";
+		int loginCount=0;
+		System.out.println();
+		System.out.println("**********Welcome to Professional Recruitment Tracking System**********");
+		System.out.println();
+		
+		MainFrame main_obj;
+		prtsDb db_obj=new prtsDb();
+		while(loginCount<3){
+			try{
+				BufferedReader br=new BufferedReader(new InputStreamReader(System.in));		
+				System.out.print("Enter username :");
+				username=br.readLine();
+				System.out.print("Enter password :");
+				password=br.readLine();
+				System.out.println();
+			}
+			catch(Exception e){
+				System.out.println("prts1 class exception"+e);
+			}
+			String status=db_obj.validateUser(username,password);
+			if(status.equals("admin")){
+				//System.out.println("Admin login");
+				main_obj =new MainFrame();
+				main_obj.init(status);
+				loginCount=3;
+			}
+			else if(status.equals("manager")){
+				//System.out.println("Manager login");
+				main_obj =new MainFrame();
+				main_obj.init(status);	
+				loginCount=3;
+			}					
+			else if(status.equals("operator")){
+				//System.out.println("operator login");
+				main_obj =new MainFrame();
+				main_obj.init(status);	
+				loginCount=3;
+			}
+			else if(status.equals("invalid")){
+	
+				loginCount++;
+				if(loginCount>2){
+					System.out.println("\t\tUnauthorised user-Closing application");
+				}
+				else{
+					System.out.println("\t\tEither username or password or both are wrong-Try Again");
+					System.out.println();
+				}
+			}
+		}
+	}
+}
+			import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportCompanyDetails extends JFrame
+{
+	String[] headings = { "CompanyID", "Company Name", "Address", "City","State","Country","Pin","Phone","Email"}; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	CompanySkillSetBean company_obj;
+ 	Container c = null;
+ 
+  	public ReportCompanyDetails() 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+		ArrayList arraylist_company=db_obj.getCompanyRecords();
+          		if(arraylist_company.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_company.size()][10];
+        			for(int i=0;i<arraylist_company.size();i++)	
+			{
+				company_obj=(CompanySkillSetBean)arraylist_company.get(i);
+				data[i][0]=String.valueOf(company_obj.getCompanyId());
+				data[i][1]=company_obj.getCompanyName();
+				data[i][2]=company_obj.getAddress();
+				data[i][3]=company_obj.getCity();
+				data[i][4]=company_obj.getState();
+				data[i][5]=company_obj.getCountry();
+				data[i][6]=company_obj.getPin();
+				data[i][7]=company_obj.getPhone();
+				data[i][8]=company_obj.getEmail();
+		
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+		else{
+			c.add(new JLabel("There are no records to display"));
+		}
+
+		setTitle("Company Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}  
+}import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportCompanyRequirements extends JFrame
+{
+	String[] headings = { "CompanyID", "Experience(years)", "Salary Offered", "Qualifications"}; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	CompanySkillSetBean company_obj;
+ 	Container c = null;
+ 
+  	public ReportCompanyRequirements() 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+		ArrayList arraylist_company=db_obj.getCompanyRecords();
+          		if(arraylist_company.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_company.size()][4];
+        			for(int i=0;i<arraylist_company.size();i++)	
+			{
+				company_obj=(CompanySkillSetBean)arraylist_company.get(i);
+				data[i][0]=String.valueOf(company_obj.getCompanyId());
+				data[i][1]=String.valueOf(company_obj.getExperience());
+				data[i][2]=String.valueOf(company_obj.getSalaryOffered());
+				data[i][3]=company_obj.getQualification();
+
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+		else{
+			c.add(new JLabel("There are no records to display"));
+		}
+
+		setTitle("Company Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}  
+}import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportCompanySkillSetRequirements extends JFrame
+{
+	String[] headings = { "CompanyID", "Operating System", "Technologies", "Scripting Languages","Databases","Frameworks","Testing Tool","Other Skills"}; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	CompanySkillSetBean company_obj;
+ 	Container c = null;
+ 
+  	public ReportCompanySkillSetRequirements() 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+		ArrayList arraylist_company=db_obj.getCompanyRecords();
+          		if(arraylist_company.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_company.size()][8];
+        			for(int i=0;i<arraylist_company.size();i++)	
+			{
+				company_obj=(CompanySkillSetBean)arraylist_company.get(i);
+				data[i][0]=String.valueOf(company_obj.getCompanyId());
+				data[i][1]=company_obj.getOperatingSystem();
+				data[i][2]=company_obj.getTechnologies();
+				data[i][3]=company_obj.getScriptingLanguages();
+				data[i][4]=company_obj.getDatabases();
+				data[i][5]=company_obj.getFrameworks();
+				data[i][6]=company_obj.getTestingTools();
+				data[i][7]=company_obj.getOtherSkills();
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+		else{
+			c.add(new JLabel("There are no records to display"));
+		}
+
+		setTitle("Company SkillSet Requirement Report");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}  
+}
+import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportEmployeeDetails extends JFrame
+{
+	String[] headings = { "EmpID", "UserName", "Status", "FirstName","Last Name","Fathers Name","Address","Mobile","Email","Date Of Birth" }; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	EmployeeBean emp1_obj;
+ 	Container c = null;
+ 
+  	public ReportEmployeeDetails() 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+		ArrayList arraylist_emp=db_obj.getEmployeeRecords();
+          		if(arraylist_emp.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_emp.size()][10];
+        			for(int i=0;i<arraylist_emp.size();i++)	
+			{
+				emp1_obj=(EmployeeBean)arraylist_emp.get(i);
+				data[i][0]=String.valueOf(emp1_obj.getEmpId());
+				data[i][1]=emp1_obj.getUsername();
+				data[i][2]=emp1_obj.getEmpStatus();
+				data[i][3]=emp1_obj.getEmpFName();
+				data[i][4]=emp1_obj.getEmpLName();
+				data[i][5]=emp1_obj.getEmpFFName();
+				data[i][6]=emp1_obj.getEmpAddress();
+				data[i][7]=emp1_obj.getEmpMobile();
+				data[i][8]=emp1_obj.getEmpEmail();
+				data[i][9]=emp1_obj.getEmpDOB();
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+			c.add(jp); 
+		}
+		else{
+			c.add(new JLabel("There are no records to display"));
+		}
+
+		setTitle("Employee Personal Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}  
+}import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportProfessionalExperience extends JFrame
+{
+	String[] headings = {"Professional Id" ,"Experience ID", "Start Date","End Date","Company Name","Location","Designation","Job Profile","SalaryPackage"}; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	ProfessionalExperienceBean experience_obj;
+ 	Container c = null;
+ 	public ReportProfessionalExperience(){
+		db_obj=new prtsDb();
+		c=this.getContentPane();
+		c.setLayout(new FlowLayout());
+		ArrayList arraylist_experience=db_obj.getAllProfessionalExperience();
+          		if(arraylist_experience.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_experience.size()][9];
+        			for(int i=0;i<arraylist_experience.size();i++)	
+			{
+				experience_obj=(ProfessionalExperienceBean)arraylist_experience.get(i);
+				data[i][0]=String.valueOf(experience_obj.getProfId());
+				data[i][1]=String.valueOf(experience_obj.getExperienceId());
+				data[i][2]=experience_obj.getStartDate();
+				data[i][3]=experience_obj.getEndDate();
+				data[i][4]=experience_obj.getCompanyName();
+				data[i][5]=experience_obj.getLocation();
+				data[i][6]=experience_obj.getDesignation();
+				data[i][7]=experience_obj.getJobProfile();
+				data[i][8]=String.valueOf(experience_obj.getSalaryPackage());
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+		setTitle("Professional Experience Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  
+		setVisible(true);
+	}
+  	public ReportProfessionalExperience(ArrayList arraylist_experience) 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+          		if(arraylist_experience.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_experience.size()][9];
+        			for(int i=0;i<arraylist_experience.size();i++)	
+			{
+				experience_obj=(ProfessionalExperienceBean)arraylist_experience.get(i);
+				data[i][0]=String.valueOf(experience_obj.getProfId());
+				data[i][1]=String.valueOf(experience_obj.getExperienceId());
+				data[i][2]=experience_obj.getStartDate();
+				data[i][3]=experience_obj.getEndDate();
+				data[i][4]=experience_obj.getCompanyName();
+				data[i][5]=experience_obj.getLocation();
+				data[i][6]=experience_obj.getDesignation();
+				data[i][7]=experience_obj.getJobProfile();
+				data[i][8]=String.valueOf(experience_obj.getSalaryPackage());
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+		else{
+			c.add(new JLabel("No Records to display"));
+		}
+
+		setTitle("Professional Experience Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}  
+}import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportProfessionalProjects extends JFrame
+{
+	String[] headings = {"Professional Id" ,"Experience ID","Project Id","Project Name","Start Date","End Date","Technologies Used","Project Description"}; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	ProjectDetailsBean project_obj;
+ 	Container c = null;
+ 
+	public ReportProfessionalProjects(){
+		db_obj=new prtsDb();
+		c=this.getContentPane();
+		c.setLayout(new FlowLayout());
+		ArrayList arraylist_project=db_obj.getAllProfessionalProjects();
+          		if(arraylist_project.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_project.size()][8];
+        			for(int i=0;i<arraylist_project.size();i++)	
+			{
+				project_obj=(ProjectDetailsBean)arraylist_project.get(i);
+				data[i][0]=String.valueOf(project_obj.getProfId());
+				data[i][1]=String.valueOf(project_obj.getExperienceId());
+				data[i][2]=String.valueOf(project_obj.getProjectId());
+				data[i][3]=project_obj.getProjectName();
+				data[i][4]=project_obj.getProjectStartDate();
+				data[i][5]=project_obj.getProjectEndDate();
+				data[i][6]=project_obj.getTechnologiesLanguages();
+				data[i][7]=project_obj.getProjectDescription();
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+	
+		setTitle("Professional's Project Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  
+		setVisible(true);
+	}
+  	public ReportProfessionalProjects(ArrayList arraylist_project) 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+          		if(arraylist_project.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_project.size()][8];
+        			for(int i=0;i<arraylist_project.size();i++)	
+			{
+				project_obj=(ProjectDetailsBean)arraylist_project.get(i);
+				data[i][0]=String.valueOf(project_obj.getProfId());
+				data[i][1]=String.valueOf(project_obj.getExperienceId());
+				data[i][2]=String.valueOf(project_obj.getProjectId());
+				data[i][3]=project_obj.getProjectName();
+				data[i][4]=project_obj.getProjectStartDate();
+				data[i][5]=project_obj.getProjectEndDate();
+				data[i][6]=project_obj.getTechnologiesLanguages();
+				data[i][7]=project_obj.getProjectDescription();
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+		else{
+			c.add(new JLabel("No Records to display"));
+		}
+
+		setTitle("Professional's Project Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}  
+}import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportProfessionalQualification extends JFrame
+{
+	String[] headings = {"Professional Id" ,"Qualification ID", "Qualification Name","Branch","Year Of Passing","UniverSity/Board","College/Institute","Percentage Marks"}; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	ProfessionalQualificationBean qualification_obj;
+ 	Container c = null;
+
+	public ReportProfessionalQualification(){
+		db_obj=new prtsDb();
+		c=this.getContentPane();
+		c.setLayout(new FlowLayout());
+		ArrayList arraylist_qualification=db_obj.getAllProfessionalQualification();	
+		if(arraylist_qualification.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_qualification.size()][8];
+        			for(int i=0;i<arraylist_qualification.size();i++)	
+			{
+				qualification_obj=(ProfessionalQualificationBean)arraylist_qualification.get(i);
+				data[i][0]=String.valueOf(qualification_obj.getProfId());
+				data[i][1]=String.valueOf(qualification_obj.getQualificationId());
+				data[i][2]=qualification_obj.getQualificationName();
+				data[i][3]=qualification_obj.getBranch();
+				data[i][4]=qualification_obj.getYearOfPassing();
+				data[i][5]=qualification_obj.getUniversityBoard();
+				data[i][6]=qualification_obj.getCollegeInstitute();
+				data[i][7]=String.valueOf(qualification_obj.getPerMarks());
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+
+
+		setTitle("Professional's Qualification Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  
+		setVisible(true);
+	}  
+
+  	public ReportProfessionalQualification(ArrayList arraylist_qualification) 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+		if(arraylist_qualification.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_qualification.size()][8];
+        			for(int i=0;i<arraylist_qualification.size();i++)	
+			{
+				qualification_obj=(ProfessionalQualificationBean)arraylist_qualification.get(i);
+				data[i][0]=String.valueOf(qualification_obj.getProfId());
+				data[i][1]=String.valueOf(qualification_obj.getQualificationId());
+				data[i][2]=qualification_obj.getQualificationName();
+				data[i][3]=qualification_obj.getBranch();
+				data[i][4]=qualification_obj.getYearOfPassing();
+				data[i][5]=qualification_obj.getUniversityBoard();
+				data[i][6]=qualification_obj.getCollegeInstitute();
+				data[i][7]=String.valueOf(qualification_obj.getPerMarks());
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+
+		setTitle("Professional Personal Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}
+
+}import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportProfessionalSkillSet extends JFrame
+{
+	String[] headings = { "Professional ID", "Operating System", "Technologies", "Scripting Languages","Databases","Frameworks","Testing Tool","Other Skills"}; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	ProfessionalSkillSetBean skill_obj;
+ 	Container c = null;
+ 
+  	public ReportProfessionalSkillSet() 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+		ArrayList arraylist_skill=db_obj.getProfessionalSkillSetRecords();
+          		if(arraylist_skill.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_skill.size()][8];
+        			for(int i=0;i<arraylist_skill.size();i++)	
+			{
+				skill_obj=(ProfessionalSkillSetBean)arraylist_skill.get(i);
+				data[i][0]=String.valueOf(skill_obj.getProfId());
+				data[i][1]=skill_obj.getOperatingSystem();
+				data[i][2]=skill_obj.getTechnologies();
+				data[i][3]=skill_obj.getScriptingLanguages();
+				data[i][4]=skill_obj.getDatabases();
+				data[i][5]=skill_obj.getFrameworks();
+				data[i][6]=skill_obj.getTestingTools();
+				data[i][7]=skill_obj.getOtherSkills();
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+		else{
+			c.add(new JLabel("There are no records to display"));
+		}
+
+		setTitle("Professional's SkillSet Report");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}  
+}import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportProPersonalDetails extends JFrame
+{
+	String[] headings = { "ID", "FirstName","Last Name","Fathers Name","Address","Mobile","Email","Date Of Birth","PAN","Expected Salary" }; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	ProfessionalPersonalBean pro_obj;
+ 	Container c = null;
+ 
+  	public ReportProPersonalDetails() 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+		ArrayList arraylist_prof=db_obj.getProfessionalPersonalRecords();
+          		if(arraylist_prof.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_prof.size()][10];
+        			for(int i=0;i<arraylist_prof.size();i++)	
+			{
+				pro_obj=(ProfessionalPersonalBean)arraylist_prof.get(i);
+				data[i][0]=String.valueOf(pro_obj.getProfId());
+				data[i][1]=pro_obj.getProfFName();
+				data[i][2]=pro_obj.getProfLName();
+				data[i][3]=pro_obj.getProfFFName();
+				data[i][4]=pro_obj.getProfAddress();
+				data[i][5]=pro_obj.getProfMobile();
+				data[i][6]=pro_obj.getProfEmail();
+				data[i][7]=pro_obj.getProfDOB();
+				data[i][8]=pro_obj.getProfPAN();
+				data[i][9]=String.valueOf(pro_obj.getProfExpectedSalary());
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+		else{
+			c.add(new JLabel("There are no records to display"));
+		}
+
+		setTitle("Professional Personal Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}  
+}import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportSearchCompany extends JFrame
+{
+	String[] headings = { "CompanyID", "Company Name", "Phone","Email","Salary Offered"}; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	CompanySkillSetBean company_obj;
+ 	Container c = null;
+ 
+  	public ReportSearchCompany(ArrayList arraylist_company) 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+          		if(arraylist_company.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_company.size()][5];
+        			for(int i=0;i<arraylist_company.size();i++)	
+			{
+				company_obj=(CompanySkillSetBean)arraylist_company.get(i);
+				data[i][0]=String.valueOf(company_obj.getCompanyId());
+				data[i][1]=company_obj.getCompanyName();
+				data[i][2]=company_obj.getPhone();
+				data[i][3]=company_obj.getEmail();
+				data[i][4]=String.valueOf(company_obj.getSalaryOffered());
+		
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+		else{
+			c.add(new JLabel("There are no records to display"));
+		}
+
+		setTitle("Search result");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}  
+}import java.util.ArrayList;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import com.alpha.prts.*;
+
+public class ReportSearchProfessional extends JFrame
+{
+	String[] headings = { "ID", "FirstName","Last Name","Mobile","Email","Expected Salary" }; 
+   	
+  	JScrollPane jp;
+	JTable jt;
+	prtsDb db_obj;
+ 	ProfessionalPersonalBean pro_obj;
+ 	Container c = null;
+ 
+  	public ReportSearchProfessional(ArrayList arraylist_prof) 
+	{    
+		db_obj=new prtsDb();
+		c = this.getContentPane();
+		c.setLayout(new FlowLayout());
+    		if(arraylist_prof.size()>0)
+		{
+		
+			String[][] data =new String[arraylist_prof.size()][6];
+        			for(int i=0;i<arraylist_prof.size();i++)	
+			{
+				pro_obj=(ProfessionalPersonalBean)arraylist_prof.get(i);
+				data[i][0]=String.valueOf(pro_obj.getProfId());
+				data[i][1]=pro_obj.getProfFName();
+				data[i][2]=pro_obj.getProfLName();
+				data[i][3]=pro_obj.getProfMobile();
+				data[i][4]=pro_obj.getProfEmail();
+				data[i][5]=String.valueOf(pro_obj.getProfExpectedSalary());
+			}	  
+ 			
+			 jt = new JTable(data, headings); 
+			jt.setPreferredScrollableViewportSize(new Dimension(1000,700)); 
+			jp = new JScrollPane(jt); 
+	       		c.add(jp); 
+		}
+		else{
+			c.add(new JLabel("There are no records to display"));
+		}
+
+		setTitle("Professional Personal Records");  
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());   
+        		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);    
+        		setVisible(true);    
+  	}  
+}import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+class SearchCompany extends JPanel implements ActionListener
+{
+	JPanel panelCenter,panelSouth,panelEast,panel_heading;
+	JButton btn_search,btn_cancel;
+
+	JLabel lbl_professionalId,lbl_professionalName,lbl_selectSearch,lblMessage,lbl_heading;
+
+	JLabel lbl_empty1,lbl_empty2,lbl_empty3,lbl_empty4,lbl_empty5,lbl_empty6,lbl_empty7,lbl_empty8,lbl_empty9,lbl_empty10,lbl_empty11,lbl_empty12,lbl_empty13,lbl_empty14,lbl_empty15,lbl_empty16,lbl_empty17,lbl_empty18,lbl_empty19,lbl_empty20;
+	JLabel lbl_empty21,lbl_empty22,lbl_empty23,lbl_empty24,lbl_empty25,lbl_empty26,lbl_empty27,lbl_empty28,lbl_empty29,lbl_empty30,lbl_empty31,lbl_empty32,lbl_empty33,lbl_empty34,lbl_empty35,lbl_empty36,lbl_empty37,lbl_empty38,lbl_empty39,lbl_empty40;
+	JLabel lbl_empty41,lbl_empty42,lbl_empty43,lbl_empty44,lbl_empty45,lbl_empty46,lbl_empty47,lbl_empty48,lbl_empty49,lbl_empty50;
+
+	JComboBox combo_professionalId,combo_professionalName;
+	JCheckBox check_experience,check_salary,check_skillSet,check_qualification;
+
+
+	prtsDb db_obj=new prtsDb();
+	int count=0;
+	String editSaveFlag="none";
+	
+	
+	public SearchCompany(){}
+	{
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		panelCenter=new JPanel();
+		panelSouth=new JPanel();
+		panelEast=new JPanel();
+		panel_heading=new JPanel();
+		
+		check_experience=new JCheckBox("     Experience");
+		check_experience.addActionListener(this);
+
+		check_salary=new JCheckBox("     Salary");
+		check_salary.addActionListener(this);
+
+		check_skillSet=new JCheckBox("     Skill Set");
+		check_skillSet.addActionListener(this);
+
+		check_qualification=new JCheckBox("     Qualification");	
+		check_qualification.addActionListener(this);
+
+		btn_search=new JButton("Search");
+		btn_search.addActionListener(this);
+	
+		btn_cancel=new JButton("Cancel");	
+		btn_cancel.addActionListener(this);
+
+
+		combo_professionalId=new JComboBox();
+		combo_professionalId.addItem("Select Professional Id");
+		combo_professionalName=new JComboBox();
+		combo_professionalName.addItem("Select Professional Name");		
+
+		ArrayList al_pro=db_obj.getAllProfessional();
+		if(al_pro.size()>0){
+			Iterator itr = al_pro.iterator();
+			while(itr.hasNext()){
+				combo_professionalId.addItem((Integer)itr.next());
+				combo_professionalName.addItem((String)itr.next());			
+			}
+		}
+
+
+
+
+
+		lbl_professionalId=new JLabel("Professional Id");
+		lbl_professionalName=new JLabel("Professional Name");
+		
+		lbl_selectSearch=new JLabel("Select Criteria for search");
+		lbl_selectSearch.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbl_selectSearch.setFont(new Font("Tahoma", 1, 14));
+
+		lbl_heading=new JLabel("Search Company");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+		
+		lbl_empty1=new JLabel("");
+		lbl_empty2=new JLabel("");
+		lbl_empty3=new JLabel("");
+		lbl_empty4=new JLabel("");
+		lbl_empty5=new JLabel("");
+		lbl_empty6=new JLabel("");
+		lbl_empty7=new JLabel("");
+		lbl_empty8=new JLabel("");
+		lbl_empty9=new JLabel("");
+		lbl_empty10=new JLabel("");
+		lbl_empty11=new JLabel("");
+		lbl_empty12=new JLabel("");
+		lbl_empty13=new JLabel("");
+		lbl_empty14=new JLabel("");
+		lbl_empty15=new JLabel("");
+		lbl_empty16=new JLabel("");
+		lbl_empty17=new JLabel("");
+		lbl_empty18=new JLabel("");
+		lbl_empty19=new JLabel("");
+		lbl_empty20=new JLabel("");
+		lbl_empty21=new JLabel("");
+		lbl_empty22=new JLabel("");
+		lbl_empty23=new JLabel("");
+		lbl_empty24=new JLabel("");
+		lbl_empty25=new JLabel("");
+		lbl_empty26=new JLabel("");
+		lbl_empty27=new JLabel("");
+		lbl_empty28=new JLabel("");
+		lbl_empty29=new JLabel("");
+		lbl_empty30=new JLabel("");
+		lbl_empty31=new JLabel("");
+		lbl_empty32=new JLabel("");
+		lbl_empty33=new JLabel("");
+		lbl_empty34=new JLabel("");
+		lbl_empty35=new JLabel("");
+		lbl_empty36=new JLabel("");
+		lbl_empty37=new JLabel("");
+		lbl_empty38=new JLabel("");
+		lbl_empty39=new JLabel("");
+		lbl_empty40=new JLabel("");
+		lbl_empty41=new JLabel("");
+
+		
+		
+		panelCenter.setLayout(new GridLayout(15,4,10,15));
+		panelSouth.setLayout(new FlowLayout());
+		panel_heading.setLayout(new GridLayout(4,1));
+		
+		panel_heading.add(lbl_empty1);
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lbl_empty2);
+		panel_heading.add(lblMessage);
+		
+		panelCenter.add(lbl_empty3);
+		panelCenter.add(lbl_professionalId);
+		panelCenter.add(combo_professionalId);
+		panelCenter.add(lbl_empty4);
+
+		panelCenter.add(lbl_empty5);
+		panelCenter.add(lbl_professionalName);
+		panelCenter.add(combo_professionalName);
+		panelCenter.add(lbl_empty6);
+
+		panelCenter.add(lbl_empty7);
+		panelCenter.add(lbl_selectSearch);
+
+		panelCenter.add(lbl_empty8);
+		panelCenter.add(lbl_empty9);
+
+
+		panelCenter.add(lbl_empty10);
+		panelCenter.add(lbl_empty11);
+		panelCenter.add(check_experience);
+		panelCenter.add(lbl_empty12);
+
+		panelCenter.add(lbl_empty13);
+		panelCenter.add(lbl_empty14);
+		panelCenter.add(check_salary);
+		panelCenter.add(lbl_empty15);
+
+		panelCenter.add(lbl_empty16);
+		panelCenter.add(lbl_empty17);
+		panelCenter.add(check_skillSet);
+		panelCenter.add(lbl_empty18);
+
+		panelCenter.add(lbl_empty19);
+		panelCenter.add(lbl_empty20);
+		panelCenter.add(check_qualification);
+		panelCenter.add(lbl_empty21);
+
+		panelCenter.add(lbl_empty22);
+		panelCenter.add(lbl_empty23);
+		panelCenter.add(lbl_empty24);
+		panelCenter.add(lbl_empty25);
+
+		panelCenter.add(lbl_empty26);
+		panelCenter.add(lbl_empty27);
+		panelCenter.add(lbl_empty28);
+		panelCenter.add(lbl_empty29);
+
+
+		panelCenter.add(lbl_empty30);
+		panelCenter.add(lbl_empty31);
+		panelCenter.add(lbl_empty32);
+		panelCenter.add(lbl_empty33);
+
+		panelCenter.add(lbl_empty34);
+		panelCenter.add(lbl_empty35);
+		panelCenter.add(lbl_empty36);
+		panelCenter.add(lbl_empty37);
+
+		panelCenter.add(lbl_empty38);
+		panelCenter.add(lbl_empty39);
+		panelCenter.add(lbl_empty40);
+		panelCenter.add(lbl_empty41);
+
+		panelSouth.add(btn_search);
+		panelSouth.add(btn_cancel);
+
+
+		add(panel_heading,BorderLayout.NORTH);
+		add(panelCenter,BorderLayout.CENTER);
+		add(panelSouth,BorderLayout.SOUTH);
+				
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+
+		Boolean checkExperience=check_experience.isSelected();
+		Boolean checkSalary=check_salary.isSelected();
+		Boolean checkSkillSet=check_skillSet.isSelected();
+		Boolean checkQualification=check_qualification.isSelected();
+		int indexId;
+		int indexName;
+		int professionalId;
+		if(ae.getSource()==btn_search){
+			{
+				int flag=0;
+				indexId=combo_professionalId.getSelectedIndex();
+				indexName=combo_professionalName.getSelectedIndex();
+				if(indexId==0 &&  indexName==0){
+					lblMessage.setText("Select Professional Id or Professional Name");
+					flag=1;
+				}
+				else if(indexId!=0 && indexName!=0){
+					lblMessage.setText("Select Either Professional Id or Professional Name");
+					flag=1;
+				}
+				else if(!checkSalary && !checkExperience && !checkSkillSet && !checkQualification){
+					lblMessage.setText("Select search criteria");
+					flag=1;
+				}		
+				if(flag==0){
+					if(indexName!=0){
+						professionalId=(Integer)combo_professionalId.getItemAt(indexName);
+					}
+					else{
+						professionalId=(Integer)combo_professionalId.getItemAt(indexId);
+					}
+					ArrayList al_company=db_obj.searchCompany(checkExperience,checkSalary,checkSkillSet,checkQualification,professionalId);
+					if(al_company.size()>0){
+						ReportSearchCompany obj=new ReportSearchCompany(al_company);
+						lblMessage.setText("");
+					}
+					else{		
+						lblMessage.setText("No companies found");
+					}
+				}
+			}
+		}
+		if(ae.getSource()==btn_cancel){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+			/*
+			combo_professionalId.setSelectedIndex(0);
+			combo_professionalName.setSelectedIndex(0);
+			check_experience.setSelected(false);
+			check_salary.setSelected(false);
+			check_skillSet.setSelected(false);
+			check_qualification.setSelected(false);
+			*/
+			
+			
+		}
+		
+		
+	}
+	
+}
+/*
+				System.out.println("checkExperience"+checkExperience);
+				System.out.println("checkSalary"+checkSalary);
+				System.out.println("checkSkillSet"+checkSkillSet);
+				System.out.println("checkQualification"+checkQualification);
+*/import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.alpha.prts.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+class SearchProfessional extends JPanel implements ActionListener
+{
+	JPanel panelCenter,panelSouth,panelEast,panel_heading;
+	JButton btn_search,btn_cancel;
+
+	JLabel lbl_companyId,lbl_companyName,lbl_selectSearch,lblMessage,lbl_heading;
+
+	JLabel lbl_empty1,lbl_empty2,lbl_empty3,lbl_empty4,lbl_empty5,lbl_empty6,lbl_empty7,lbl_empty8,lbl_empty9,lbl_empty10,lbl_empty11,lbl_empty12,lbl_empty13,lbl_empty14,lbl_empty15,lbl_empty16,lbl_empty17,lbl_empty18,lbl_empty19,lbl_empty20;
+	JLabel lbl_empty21,lbl_empty22,lbl_empty23,lbl_empty24,lbl_empty25,lbl_empty26,lbl_empty27,lbl_empty28,lbl_empty29,lbl_empty30,lbl_empty31,lbl_empty32,lbl_empty33,lbl_empty34,lbl_empty35,lbl_empty36,lbl_empty37,lbl_empty38,lbl_empty39,lbl_empty40;
+	JLabel lbl_empty41,lbl_empty42,lbl_empty43,lbl_empty44,lbl_empty45,lbl_empty46,lbl_empty47,lbl_empty48,lbl_empty49,lbl_empty50;
+
+	JComboBox combo_companyId,combo_companyName;
+	JCheckBox check_experience,check_salary,check_skillSet,check_qualification;
+
+
+	prtsDb db_obj=new prtsDb();
+	int count=0;
+	String editSaveFlag="none";
+	
+	public SearchProfessional(){}
+	{
+		setLayout(new BorderLayout(5,5));
+		setSize(800,500);
+		panelCenter=new JPanel();
+		panelSouth=new JPanel();
+		panelEast=new JPanel();
+		panel_heading=new JPanel();
+
+	
+
+
+		check_experience=new JCheckBox("     Experience");
+		check_experience.addActionListener(this);
+
+		check_salary=new JCheckBox("     Salary");
+		check_salary.addActionListener(this);
+
+		check_skillSet=new JCheckBox("     Skill Set");
+		check_skillSet.addActionListener(this);
+
+		check_qualification=new JCheckBox("     Qualification");	
+		check_qualification.addActionListener(this);	
+
+		btn_search=new JButton("Search");
+		btn_search.addActionListener(this);
+	
+		btn_cancel=new JButton("Cancel");	
+		btn_cancel.addActionListener(this);
+		
+
+		combo_companyId=new JComboBox();
+		combo_companyId.addItem("Select Company Id");
+		combo_companyName=new JComboBox();
+		combo_companyName.addItem("Select Company Name");		
+
+		ArrayList al_pro=db_obj.getAllCompanies();
+		if(al_pro.size()>0){
+			Iterator itr = al_pro.iterator();
+			while(itr.hasNext()){
+				combo_companyId.addItem((Integer)itr.next());
+				combo_companyName.addItem((String)itr.next());			
+			}
+		}
+
+		lbl_companyId=new JLabel("Company Id");
+		lbl_companyName=new JLabel("Company Name");
+		
+		lbl_selectSearch=new JLabel("Select Criteria for search");
+		lbl_selectSearch.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbl_selectSearch.setFont(new Font("Tahoma", 1, 14));
+
+		lbl_heading=new JLabel("Search Professional");
+		lbl_heading.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_heading.setFont(new Font("Tahoma", 1, 18));
+
+		lblMessage=new JLabel("");
+		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMessage.setFont(new Font("Tahoma", 1, 11));
+		lblMessage.setForeground(Color.red);
+
+
+		lbl_empty1=new JLabel("");
+		lbl_empty2=new JLabel("");
+		lbl_empty3=new JLabel("");
+		lbl_empty4=new JLabel("");
+		lbl_empty5=new JLabel("");
+		lbl_empty6=new JLabel("");
+		lbl_empty7=new JLabel("");
+		lbl_empty8=new JLabel("");
+		lbl_empty9=new JLabel("");
+		lbl_empty10=new JLabel("");
+		lbl_empty11=new JLabel("");
+		lbl_empty12=new JLabel("");
+		lbl_empty13=new JLabel("");
+		lbl_empty14=new JLabel("");
+		lbl_empty15=new JLabel("");
+		lbl_empty16=new JLabel("");
+		lbl_empty17=new JLabel("");
+		lbl_empty18=new JLabel("");
+		lbl_empty19=new JLabel("");
+		lbl_empty20=new JLabel("");
+		lbl_empty21=new JLabel("");
+		lbl_empty22=new JLabel("");
+		lbl_empty23=new JLabel("");
+		lbl_empty24=new JLabel("");
+		lbl_empty25=new JLabel("");
+		lbl_empty26=new JLabel("");
+		lbl_empty27=new JLabel("");
+		lbl_empty28=new JLabel("");
+		lbl_empty29=new JLabel("");
+		lbl_empty30=new JLabel("");
+		lbl_empty31=new JLabel("");
+		lbl_empty32=new JLabel("");
+		lbl_empty33=new JLabel("");
+		lbl_empty34=new JLabel("");
+		lbl_empty35=new JLabel("");
+		lbl_empty36=new JLabel("");
+		lbl_empty37=new JLabel("");
+		lbl_empty38=new JLabel("");
+		lbl_empty39=new JLabel("");
+		lbl_empty40=new JLabel("");
+		lbl_empty41=new JLabel("");
+
+		panelCenter.setLayout(new GridLayout(15,4,10,15));
+		panelSouth.setLayout(new FlowLayout());
+		panel_heading.setLayout(new GridLayout(4,1));
+		
+		panel_heading.add(lbl_empty1);
+		panel_heading.add(lbl_heading);
+		panel_heading.add(lbl_empty2);
+		panel_heading.add(lblMessage);
+		
+		panelCenter.add(lbl_empty3);
+		panelCenter.add(lbl_companyId);
+		panelCenter.add(combo_companyId);
+		panelCenter.add(lbl_empty4);
+
+		panelCenter.add(lbl_empty5);
+		panelCenter.add(lbl_companyName);
+		panelCenter.add(combo_companyName);
+		panelCenter.add(lbl_empty6);
+
+		panelCenter.add(lbl_empty7);
+		panelCenter.add(lbl_selectSearch);
+
+		panelCenter.add(lbl_empty8);
+		panelCenter.add(lbl_empty9);
+
+
+		panelCenter.add(lbl_empty10);
+		panelCenter.add(lbl_empty11);
+		panelCenter.add(check_experience);
+		panelCenter.add(lbl_empty12);
+
+		panelCenter.add(lbl_empty13);
+		panelCenter.add(lbl_empty14);
+		panelCenter.add(check_salary);
+		panelCenter.add(lbl_empty15);
+
+		panelCenter.add(lbl_empty16);
+		panelCenter.add(lbl_empty17);
+		panelCenter.add(check_skillSet);
+		panelCenter.add(lbl_empty18);
+
+		panelCenter.add(lbl_empty19);
+		panelCenter.add(lbl_empty20);
+		panelCenter.add(check_qualification);
+		panelCenter.add(lbl_empty21);
+
+		panelCenter.add(lbl_empty22);
+		panelCenter.add(lbl_empty23);
+		panelCenter.add(lbl_empty24);
+		panelCenter.add(lbl_empty25);
+
+		panelCenter.add(lbl_empty26);
+		panelCenter.add(lbl_empty27);
+		panelCenter.add(lbl_empty28);
+		panelCenter.add(lbl_empty29);
+
+
+		panelCenter.add(lbl_empty30);
+		panelCenter.add(lbl_empty31);
+		panelCenter.add(lbl_empty32);
+		panelCenter.add(lbl_empty33);
+
+		panelCenter.add(lbl_empty34);
+		panelCenter.add(lbl_empty35);
+		panelCenter.add(lbl_empty36);
+		panelCenter.add(lbl_empty37);
+
+		panelCenter.add(lbl_empty38);
+		panelCenter.add(lbl_empty39);
+		panelCenter.add(lbl_empty40);
+		panelCenter.add(lbl_empty41);
+
+		panelSouth.add(btn_search);
+		panelSouth.add(btn_cancel);
+
+		add(panel_heading,BorderLayout.NORTH);
+		add(panelCenter,BorderLayout.CENTER);
+		add(panelSouth,BorderLayout.SOUTH);
+				
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		Boolean checkExperience=check_experience.isSelected();
+		Boolean checkSalary=check_salary.isSelected();
+		Boolean checkSkillSet=check_skillSet.isSelected();
+		Boolean checkQualification=check_qualification.isSelected();
+		int indexId;
+		int indexName;
+		int companyId;
+		if(ae.getSource()==btn_search){
+			{
+				int flag=0;
+				indexId=combo_companyId.getSelectedIndex();
+				indexName=combo_companyName.getSelectedIndex();
+				if(indexId==0 &&  indexName==0){
+					lblMessage.setText("Select company Id or company Name");
+					flag=1;
+				}
+				else if(indexId!=0 && indexName!=0){
+					lblMessage.setText("Select Either company Id or company Name");
+					flag=1;
+				}
+				else if(!checkSalary && !checkExperience && !checkSkillSet && !checkQualification){
+					lblMessage.setText("Select search criteria");
+					flag=1;
+				}		
+				if(flag==0){
+					if(indexName!=0){
+						companyId=(Integer)combo_companyId.getItemAt(indexName);
+					}
+					else{
+						companyId=(Integer)combo_companyId.getItemAt(indexId);
+					}
+					ArrayList al_professional=db_obj.searchProfessional1(checkExperience,checkSalary,checkSkillSet,checkQualification,companyId);
+					if(al_professional.size()>0){
+						ReportSearchProfessional obj=new ReportSearchProfessional(al_professional);
+						lblMessage.setText("");
+					}
+					else{		
+						lblMessage.setText("No professional found matching selected criteria");
+					}
+				}
+			}
+		}
+		if(ae.getSource()==btn_cancel){
+		                  Component[] c=MainFrame.container.getComponents();
+        			  for(int i=0;i<c.length;i++)
+			  {   
+		                	  MainFrame.container.remove(c[i]);
+			  }
+				MainFrame.container.setVisible(false);
+			/*
+			combo_companyId.setSelectedIndex(0);
+			combo_companyName.setSelectedIndex(0);
+			check_experience.setSelected(false);
+			check_salary.setSelected(false);
+			check_skillSet.setSelected(false);
+			check_qualification.setSelected(false);
+			*/	
+		}		
+	}
+}
